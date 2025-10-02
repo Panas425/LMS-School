@@ -1,0 +1,67 @@
+.logout-btn{
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
+  position:fixed;
+  top: 1.4rem;
+  right: 2.2rem;
+}
+
+
+/* Tooltip container */
+.logout-tip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.logout-tip .tiptext {
+  background-color: #555;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 5px 0;
+  text-align: center;
+  visibility: hidden;
+  width: 60px;
+  
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 70%;
+  left: 40%;
+  margin-left: -60px;
+  
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.logout-tip .tiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.logout-tip:hover .tiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.material-symbols-outlined{
+    color:var(--accent-color);
+    font-size: 4rem;
+    font-weight: 900;
+    position:relative;
+    
+    
+}
