@@ -11,6 +11,9 @@ import {
   IUserCourses,
   IModules,
   IActivity,
+  IVideo,
+  IDocument,
+  ISubmission,
 } from "../utils";
 import { useAuthContext } from "../hooks";
 import { jwtDecode } from "jwt-decode";
@@ -29,12 +32,29 @@ interface IApiData {
   courseIds: ICourseIds[] | null;
   myCourses: ICourses[];
 
+
+  uploadModuleVideo: (videoDetails: {
+    moduleId: string;
+    title: string;
+    description?: string;
+    file: File;
+  }) => Promise<void>;
+
+  uploadSubmission: (submissionDetails: {
+    file: File;
+    activityId: string;
+    deadline?: Date | null;
+  }) => Promise<any>;
+
+
+
   getCourseByIdFromRouter: (courseId: string[]) => Promise<void>;
   activities: IActivity[] | null;
   setmyCourse: (course: ICourses | null) => void;
   setUserList: (users: IUser[]) => void;
   getCourseById: () => Promise<void>;
-  fetchCoursesForUser: (userId: string) => Promise<void>; 
+  fetchModuleVideos: (moduleId: string) => Promise<IDocument[]>;
+  fetchCoursesForUser: (userId: string) => Promise<void>;
   setCourse: React.Dispatch<React.SetStateAction<ICourses | null>>;
   createCourse: (courseDetails: {
     name: string;
@@ -59,12 +79,22 @@ interface IApiData {
     end: string;
     courseID: string[];
   }) => Promise<IModules>;
-  createActivity: (activityDetails: { name: string; description: string; activityType: string; start: string; end: string; moduleID: string })=> Promise<void>;
+  createActivity: (activityDetails: {
+    name: string;
+    description: string;
+    activityType: string;
+    start: string;
+    end: string;
+    moduleID: string;
+  }) => Promise<IActivity>;
   fetchAllCourses: () => Promise<ICourses[]>
   fetchCourse: (id: string) => Promise<void>;
   fetchUsersWithCourses: () => Promise<IUserCourse[]>;
-  
-  fetchActivities: (moduleId: string) => Promise<void>;
+  deleteSubmission: (submissionId: string) => Promise<void>
+  fetchSubmissionsByActivity: (activityId: string) => Promise<any[]>
+  fetchMySubmissionForActivity: (userId: string) => Promise<ISubmission[]>
+  fetchActivities: (moduleId: string) => Promise<IActivity[]>;
+
   handleDeleteUser: (userId: string) => Promise<void>;
   deleteCourse: (courseId: string) => Promise<void>;
   deleteModule: (moduleId: string) => Promise<void>;
@@ -176,6 +206,42 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
+  const uploadSubmission = async (submissionDetails: {
+    file: File;
+    activityId: string;
+    deadline?: Date | null;
+  }): Promise<any> => {
+    try {
+      const formData = new FormData();
+      formData.append("file", submissionDetails.file);
+      formData.append("activityId", submissionDetails.activityId);
+      if (submissionDetails.deadline) {
+        // Format deadline to ISO string expected by backend
+        formData.append("deadline", submissionDetails.deadline.toISOString());
+      }
+
+      const response = await fetch(`${BASE_URL}/submissions/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokens?.accessToken}`,
+          // Do not set Content-Type here; let the browser set multipart boundary
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Upload failed: ${errorText}`);
+      }
+
+      const data = await response.json();
+      return data; // Return the created submission
+    } catch (error) {
+      console.error("Error uploading submission:", error);
+      throw error;
+    }
+  };
+
   const getCourseByIdFromRouter = async (courseId: string[]) => {
     console.log(courseId);
     try {
@@ -229,15 +295,27 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
-  const createActivity = async (activityDetails: { name: string; description: string; activityType: string; start: string; end: string; moduleID: string }): Promise<void> => {
+  const createActivity = async (
+    activityDetails: {
+      name: string;
+      description: string;
+      activityType: string;
+      start: string;
+      end: string;
+      moduleID: string;
+    }
+  ): Promise<IActivity> => {
     const url = `${BASE_URL}/activities`;
+
     try {
-      const newActivity = await fetchWithToken(url, "POST", activityDetails);
-      
+      const newActivity: IActivity = await fetchWithToken(url, "POST", activityDetails);
+
       setActivities((prevActivity) =>
         Array.isArray(prevActivity) ? [...prevActivity, newActivity] : [newActivity]
       );
-      alert("activities added")
+
+      alert("Activity added");
+      return newActivity; // ✅ Return created activity
     } catch (error) {
       console.error("Error creating activity:", error);
       throw error;
@@ -246,11 +324,11 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
 
   const fetchUsersWithCourses = async (): Promise<IUserCourse[]> => {
     if (!course || !course.id) return []; // Return an empty array instead of void
-  
+
     try {
       const response = await fetchWithToken(`${BASE_URL}/courses/usercourses`);
       console.log("Fetched user courses:", response);
-  
+
       // Ensure the response is of the expected type before setting the state
       if (Array.isArray(response)) {
         setUserCourses(response); // Assuming you have a state to hold this data
@@ -266,16 +344,40 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
-  const fetchActivities = async (moduleId: string): Promise<void> => {
+  const deleteSubmission = async (submissionId: string): Promise<void> => {
+    try {
+      const response = await fetch(`${BASE_URL}/submissions/${submissionId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${tokens?.accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Delete failed: ${errorText}`);
+      }
+
+      // Optionally: return true/false if you want
+      return;
+    } catch (err) {
+      console.error("Error deleting submission:", err);
+      throw err;
+    }
+  };
+
+  const fetchActivities = async (moduleId: string): Promise<IActivity[]> => {
     try {
       const activities = await fetchWithToken(`${BASE_URL}/activities/moduleid/${moduleId}`);
-      console.log(moduleId)
-      setActivities(activities); 
+      setActivities(activities); // still update the context state
+      return activities; // <-- return them so the type matches
     } catch (err) {
       console.error("Error fetching activities for module:", err);
       setActivities([]);
+      return []; // <-- return empty array on error
     }
   };
+
 
   const fetchCoursesForUser = async (userId: string) => {
     try {
@@ -290,7 +392,7 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     try {
       const courseData = await fetchWithToken(`${BASE_URL}/courses`);
       setCourses(courseData);
-      return courseData; 
+      return courseData;
     } catch (err) {
       if (err instanceof CustomError) {
         setError(err.message);
@@ -300,14 +402,14 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
       return [];
     }
   };
-  
+
 
   const fetchUsersByCourse = async () => {
     try {
       const usersData = await fetchWithToken(
         `${BASE_URL}/users/courses/${course?.id}`
       );
-      
+
       setUserList(usersData);
       localStorage.setItem("userList", JSON.stringify(usersData));
     } catch (err) {
@@ -330,7 +432,7 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
       else setError("An unexpected error occurred while fetching users.");
     }
   };
-  
+
 
   const fetchUsersByCourseId = async (courseId: string[]) => {
     try {
@@ -365,6 +467,9 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
   };
 
 
+
+
+
   const fetchCourse = async (userId: string) => {
 
     try {
@@ -376,14 +481,94 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
+  const uploadModuleVideo = async (videoDetails: {
+    moduleId: string;
+    title: string;
+    description?: string;
+    file: File;
+  }) => {
+    try {
+      const formData = new FormData();
+      formData.append("ModuleId", videoDetails.moduleId);
+      formData.append("Title", videoDetails.title);
+      if (videoDetails.description) formData.append("Description", videoDetails.description);
+      formData.append("File", videoDetails.file);
+
+      const response = await fetch(`${BASE_URL}/Documents/upload-video`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokens?.accessToken}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Upload failed: ${errorText}`);
+      }
+
+      // ✅ Parse uploaded video info
+      const uploadedVideo = await response.json();
+
+      // ✅ Automatically refresh video list for the same module
+      await fetchModuleVideos(videoDetails.moduleId);
+
+      // ✅ Return uploaded video (optional)
+      return uploadedVideo;
+    } catch (err) {
+      console.error("Error uploading module video:", err);
+      throw err;
+    }
+  };
+
+  const fetchSubmissionsByActivity = async (activityId: string): Promise<any[]> => {
+    try {
+      const response = await fetch(`${BASE_URL}/submissions/activity/${activityId}`, {
+        headers: {
+          Authorization: `Bearer ${tokens?.accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch submissions: ${errorText}`);
+      }
+
+      const data = await response.json();
+      return data; // Array of submissions
+    } catch (err) {
+      console.error("Error fetching submissions:", err);
+      return []; // Return empty array on error
+    }
+  };
+
+  const fetchMySubmissionForActivity = async (userId: string): Promise<ISubmission[]> => {
+    if (!userId) return [];
+    
+    try {
+      const data: ISubmission[] = await fetchWithToken(
+        `${BASE_URL}/submissions/student/${userId}`
+      );
+      console.log(data)
+      return data;
+    } catch (err) {
+      console.error("Error fetching submissions:", err);
+      return [];
+    }
+  };
+
+
+
+
+
   const handleDeleteUser = async (userId: string) => {
     try {
       // Corrected API URL to point to the user endpoint
       const url = `${BASE_URL}/users/${userId}`;
-  
+
       // Use fetchWithToken with the DELETE method, no body is necessary for deletion
       await fetchWithToken(url, "DELETE");
-  
+
       // Remove the user from the list on success
       const updatedUsers = users?.filter((user) => user.id !== userId);
 
@@ -393,14 +578,27 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
       // Handle error, show a message to the user if necessary
     }
   };
+  const fetchModuleVideos = async (moduleId: string): Promise<IDocument[]> => {
+    try {
+      const videos: IDocument[] = await fetchWithToken(
+        `${BASE_URL}/documents?moduleId=${moduleId}`
+      );
+      return videos || [];
+    } catch (err) {
+      console.error("Error fetching videos for module:", err);
+      return [];
+    }
+  };
+
+
   const deleteCourse = async (courseId: string) => {
     try {
       // Corrected API URL to point to the user endpoint
       const url = `${BASE_URL}/courses/${courseId}`;
-  
+
       // Use fetchWithToken with the DELETE method, no body is necessary for deletion
       await fetchWithToken(url, "DELETE");
-  
+
       // Remove the user from the list on success
       const updatedCourses = courses?.filter((course) => course.id !== courseId);
 
@@ -415,12 +613,12 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     try {
       const url = `${BASE_URL}/modules/${moduleId}`;
       await fetchWithToken(url, "DELETE");
-  
+
       const updatedCourses = courses?.map(course => {
         const filteredModules = course.modules.filter(module => module.id !== moduleId);
         return { ...course, modules: filteredModules };
       });
-  
+
       setCourses(updatedCourses!); // Update the state with the new courses
     } catch (error) {
       console.error("Error deleting module:", error);
@@ -431,46 +629,46 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     try {
       const url = `${BASE_URL}/activities/${actId}`;
       await fetchWithToken(url, "DELETE");
-  
+
       // Update the state to remove the deleted activity
       const updatedCourses = courses?.map(course => {
         // Update the modules in each course
         const updatedModules = course.modules.map(module => {
           // Filter out the activity with the given actId
           const filteredActivities = module.activities.filter(activity => activity.id !== actId);
-          
+
           return {
             ...module,
             activities: filteredActivities // Update the activities in the module
           };
         });
-  
+
         return {
           ...course,
           modules: updatedModules // Update the modules in the course
         };
       });
-  
+
       setCourses(updatedCourses!); // Update the state with the new courses
-  
+
       // If activities are also being managed in a separate state, update it here
-      setActivities(prevActivities => 
+      setActivities(prevActivities =>
         prevActivities?.filter(activity => activity.id !== actId) || null
       );
-  
+
     } catch (error) {
       console.error("Error deleting activity:", error);
       // Handle error, show a message to the user if necessary
     }
   };
-  
+
 
   useEffect(() => {
     if (tokens) {
       const decode = jwtDecode<JwtPayload>(tokens.accessToken);
       const id =
         decode[
-          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
         ]!;
       const name =
         decode[
@@ -480,7 +678,7 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
         decode[
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ]!.toLowerCase();
-      console.log(id)
+      console.log(role)
       setUser({ id, name, role });
     }
   }, [tokens]);
@@ -496,11 +694,11 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
   useEffect(() => {
     const storedCourse = localStorage.getItem("course");
     const storedUserList = localStorage.getItem("userList");
-    
+
     if (storedCourse) {
       setCourse(JSON.parse(storedCourse));
     }
-    
+
     if (storedUserList) {
       setUserList(JSON.parse(storedUserList));
     }
@@ -512,16 +710,16 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
 
   useEffect(() => {
     if (isModuleAdded) {
-        // Update localStorage only if a new module has been added
-        if (course) {
-            localStorage.setItem("course", JSON.stringify(course));
-        }
-        if (userList) {
-            localStorage.setItem("userList", JSON.stringify(userList));
-        }
-        setIsModuleAdded(false); // Reset the flag after updating
+      // Update localStorage only if a new module has been added
+      if (course) {
+        localStorage.setItem("course", JSON.stringify(course));
+      }
+      if (userList) {
+        localStorage.setItem("userList", JSON.stringify(userList));
+      }
+      setIsModuleAdded(false); // Reset the flag after updating
     }
-}, [isModuleAdded, course, userList]);
+  }, [isModuleAdded, course, userList]);
 
   return (
     <ApiDataContext.Provider
@@ -538,11 +736,14 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
         activities,
         error,
         courseIds,
-        myCourses, 
+        myCourses,
+        uploadModuleVideo,
         createUser,
         setmyCourse,
+        fetchModuleVideos,
         deleteActivity,
         setUserList,
+        uploadSubmission,
         handleDeleteUser,
         fetchCoursesForUser,
         fetchCourse,
@@ -554,10 +755,13 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
         deleteModule,
         getCourseById,
         fetchUsersWithCourses,
+        fetchSubmissionsByActivity,
+        fetchMySubmissionForActivity,
         fetchUsers,
         setCourse,
         createCourse,
         fetchUsersByCourse,
+        deleteSubmission,
         fetchUsersByCourseId,
         getCourseByIdFromRouter,
         deleteCourse

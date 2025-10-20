@@ -1,25 +1,26 @@
 import { ReactElement } from "react";
-import { IActivity } from "../utils";
 import { ActivityCard } from "../components/ActivityCard";
+import { IActivity } from "../utils";
 
 interface IActivityProps {
-    activityList : IActivity[];
-    message : string;
+  activityList: IActivity[];
+  message: string;
+  onDeleteSuccess?: () => void; // added optional callback
 }
 
-export function ActivityListPage({ activityList, message } : IActivityProps) : ReactElement { 
-
-    return(
-        <span className="list-section">
-          <p></p>
-            {activityList && activityList.length > 0 ? (
-              activityList.map((act) => (
-                <ActivityCard activity={act} />
-              ))
-          ) : 
-          (
-            <p>{message}</p>
-          )}
-        </span>
-    );
+export function ActivityListPage({ activityList, message }: IActivityProps): ReactElement {
+  return (
+    <span className="list-section">
+      {activityList && activityList.length > 0 ? (
+        activityList.map((act) => (
+          <ActivityCard 
+            key={act.id} 
+            activity={act} 
+          />
+        ))
+      ) : (
+        <p>{message}</p>
+      )}
+    </span>
+  );
 }

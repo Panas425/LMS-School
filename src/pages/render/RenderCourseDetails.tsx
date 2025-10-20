@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { Grid } from "../../components/Grid";
 import {  AddModuleModal } from "../../components/AddModuleModal";
 import '../../css/RenderCourseDetails.css'
+import { UploadVideoModal } from "../../components/UploadVideoModal";
+
 
 
 export function RenderCourseDetails() {
@@ -17,8 +19,8 @@ export function RenderCourseDetails() {
   useEffect(() => {
 
     if(courseId) {
-       getCourseByIdFromRouter(courseId);
-       fetchUsersByCourseId(courseId);
+       getCourseByIdFromRouter([courseId]);
+       fetchUsersByCourseId([courseId]);
     }
 
   }, []);
@@ -29,7 +31,6 @@ export function RenderCourseDetails() {
         <Header />
         
         <p className="title">{course?.name}</p>
-        
 
           <Grid>
           <AddModuleModal />

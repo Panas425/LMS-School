@@ -17,10 +17,28 @@ export interface ITokens {
   refreshToken: string;
 }
 
+export interface IDocument {
+  id: string;
+  fileName: string;
+  fileUrl: string;
+  type: "Video" | "Other"; // match your DocumentType enum
+  uploadedAt: string;
+  moduleId: string;
+  courseId: string;
+  uploadedById: string;
+}
+
 export interface ITokenObjectExtensions extends JwtPayload {
   "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
   "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": string;
   "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": string;
+}
+
+export interface IVideo {
+  id: string;        // or Guid if you use string
+  fileUrl: string;
+  fileName: string;
+  title?: string;
 }
 
 export interface ICourses {
@@ -29,6 +47,7 @@ export interface ICourses {
   description: string;
   start: Date;
   modules: IModules[];
+  videos: IVideo[];
 }
 
 export interface IModules {
@@ -68,12 +87,22 @@ export interface IUserLoggedIn {
   name: string;
   role: string;
 }
+
 export interface IActivity {
   id: string;
   name: string;
   description: string;
-  activityType: string;
   start: string;
   end: string;
-  
+  moduleID: string;
+  activityType?: string;
 }
+
+export interface ISubmission {
+    id: string;
+    fileName: string;
+    fileUrl: string;
+    student?: { userName: string };
+    activity?: { id: string };
+}
+
