@@ -13,16 +13,17 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using OfficeOpenXml;
 
 namespace LMS.API;
 
 public class Program
 {
-
-    public static async Task Main(string[] args) // Make Main async
+    public static async Task Main(string[] args)
     {
+        
         var builder = WebApplication.CreateBuilder(args);
-
+        ExcelPackage.License.SetNonCommercialPersonal("Anas");
         builder.Services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseContext") ?? throw new InvalidOperationException("Connection string 'DatabaseContext' not found.")));
         builder.Services.AddAutoMapper(typeof(MapperManager));

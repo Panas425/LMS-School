@@ -1,134 +1,168 @@
-import { ReactElement, useEffect, useState } from "react";
-import { ICourses, IUser, IUserCourse } from "../../utils";
+import { ReactElement, useContext, useState } from "react";
+import { ICourses, IUser } from "../../utils";
 import { ModalPopupCreateUser } from "../../components/ModalPopupCreateUser";
 import { Header } from "../../components/Header";
+import { ApiDataContext } from "../../context/ApiDataProvider";
 
 interface RenderMyCoursePageProps {
   course: ICourses[] | null;
   users: IUser[] | null;
   deleteUser: (userId: string) => Promise<void>;
 }
+
 export function RenderUserListPage({
   users,
   course,
   deleteUser
 }: RenderMyCoursePageProps): ReactElement {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [uploadedUsers, setUploadedUsers] = useState<any[]>([]);
 
-  const openModal = () => {
-    setShowModal(true);
+  const { uploadUsersExcel } = useContext(ApiDataContext);
+
+  const openModal = () => setShowModal(true);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) setFile(e.target.files[0]);
   };
 
-  
-
-
+  const handleUpload = async () => {
+    if (!file) {
+      setUploadMessage("Please select an Excel file first.");
+      return;
+    }
+    try {
+      const { message, users } = await uploadUsersExcel(file);
+      setUploadMessage(message);
+      setUploadedUsers(users);
+    } catch {
+      setUploadMessage("Error uploading file. Please try again.");
+    }
+  };
 
   const handleDeleteUser = async (userId: string) => {
     try {
-      await deleteUser(userId); 
-      window.location.reload(); // Consider refetching data instead of reloading
+      await deleteUser(userId);
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
 
-  // Filter the users based on search query and selected course
   const filteredUsers =
     users?.filter((user) => {
-      const matchesSearch = user.userName
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+      const matchesSearch = user.userName.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCourse = selectedCourse
-        ? user.courseID === selectedCourse
+        ? user.courseID?.includes(selectedCourse) ?? false
         : true;
       return matchesSearch && matchesCourse;
     }) || [];
 
   return (
-    <div className="main-content">
-      <div className="header-wrapper">
-        <Header />
-      </div>
-      <div className="contain">
-        <div className="sidebar mb-3">
-          <div className="d-flex flex-column">
+    <div className="container-fluid p-3">
+      <Header />
+
+      <div className="row mt-4">
+        {/* Sidebar */}
+        <aside className="col-md-3 mb-4">
+          <div className="card p-3 shadow-sm">
+            <h5 className="card-title mb-3">Filters & Upload</h5>
+
             <input
               type="text"
               placeholder="Search by username"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input mb-2"
+              className="form-control mb-3"
             />
-            <div className="filter">
-              <label htmlFor="filterSelect" className="form-label">Filter</label>
-              <select
-                id="filterSelect"
-                value={selectedCourse}
-                onChange={(e) => setSelectedCourse(e.target.value)}
-                className="form-select"
-              >
-                <option value="">Select a course</option>
-                {course && course.length > 0 ? (
-                  course.map((courses) => (
-                    <option key={courses.id} value={courses.id}>
-                      {courses.name}
-                    </option>
-                  ))
-                ) : (
-                  <option value="none">No courses available</option>
-                )}
-              </select>
-            </div>
-          </div>
-        </div>
-  
-        <div className="main-content">
-          {/* User List */}
-          <div className="user-list mt-2">
-            {filteredUsers && filteredUsers.length > 0 ? (
-              <ul className="list-group">
-                {filteredUsers.map((user) => {
-                  // Map user to course using courseID instead of userName
-                  const userCourse = course?.find(
-                    (courseItem) => courseItem.id === user.courseID
-                  );
-                  return (
-                    <li key={user.id} className="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <span className="fw-bold">{user.userName}</span>
-                        <span className="ms-2">{userCourse?.name || "No Course Assigned"}</span>
-                        <span className="badge bg-secondary ms-2">{user.role}</span>
-                      </div>
-                      <button 
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDeleteUser(user.id)}
-                      >
-                        Delete
-                      </button>
-                    </li>
-                  );
-                })}
+
+            <select
+              value={selectedCourse}
+              onChange={(e) => setSelectedCourse(e.target.value)}
+              className="form-select mb-3"
+            >
+              <option value="">All Courses</option>
+              {course?.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+
+            <hr />
+
+            <label className="form-label fw-bold">Bulk Upload via Excel</label>
+            <input
+              type="file"
+              accept=".xlsx, .xls"
+              onChange={handleFileChange}
+              className="form-control mb-2"
+            />
+            <button className="btn btn-primary w-100 mb-2" onClick={handleUpload}>
+              Upload & Register
+            </button>
+            {uploadMessage && <small className="text-muted">{uploadMessage}</small>}
+            {uploadedUsers.length > 0 && (
+              <ul className="list-group list-group-flush mt-2 small">
+                {uploadedUsers.map((user, idx) => (
+                  <li key={idx} className="list-group-item py-1">
+                    <strong>{user.userName}</strong> ({user.email})
+                  </li>
+                ))}
               </ul>
-            ) : (
-              <p>No students available.</p>
             )}
           </div>
-        </div>
+        </aside>
 
-        <div className="btn-create">
-          <button className="create-user-button" onClick={openModal}>
-            Create User
-          </button>
-        </div>
+        {/* User List */}
+        <main className="col-md-9">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h4>Users</h4>
+            <button className="btn btn-success" onClick={openModal}>
+              Create User
+            </button>
+          </div>
+
+          <div className="row">
+            {filteredUsers.length === 0 ? (
+              <div className="col-12">
+                <p className="text-muted">No users found.</p>
+              </div>
+            ) : (
+              filteredUsers.map((user) => {
+                const userCourse = course?.find((c) => user.courseID?.includes(c.id));
+                return (
+                  <div key={user.id} className="col-md-6 col-lg-4 mb-3">
+                    <div className="card shadow-sm h-100">
+                      <div className="card-body d-flex flex-column justify-content-between">
+                        <div>
+                          <h6 className="card-title">{user.userName}</h6>
+                          <p className="card-text mb-1">
+                            <span className="badge bg-secondary me-1">{user.role}</span>
+                            <span>{userCourse?.name || "No Course Assigned"}</span>
+                          </p>
+                        </div>
+                        <button
+                          className="btn btn-danger btn-sm mt-2"
+                          onClick={() => handleDeleteUser(user.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </main>
       </div>
-  
-      <ModalPopupCreateUser
-        show={showModal}
-        setShow={setShowModal}
-      />
+
+      <ModalPopupCreateUser show={showModal} setShow={setShowModal} />
     </div>
   );
 }
-

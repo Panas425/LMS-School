@@ -800,3 +800,13 @@ C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\obj\
 C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\obj\Debug\net8.0\LMS.API.genruntimeconfig.cache
 C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\obj\Debug\net8.0\ref\LMS.API.dll
 C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\EPPlus.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\EPPlus.Interfaces.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\ExcelDataReader.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\ExcelDataReader.DataSet.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\anasa\Desktop\LMS_School_Prj\LMS-School\LMS_API_School_Prj\LMS.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

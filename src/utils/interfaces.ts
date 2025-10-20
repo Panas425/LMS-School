@@ -66,6 +66,13 @@ export interface IUser {
   email: string;
   courseID: string[];
 }
+export interface IRegisterUser {
+  FirstName: string;
+  LastName: string;
+  role: string;
+  email: string;
+  courseID: string[];
+}
 
 export interface IUserCourses {
   userName: string;

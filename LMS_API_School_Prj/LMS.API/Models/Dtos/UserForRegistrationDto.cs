@@ -5,17 +5,12 @@ namespace LMS.API.Models.Dtos;
 
 public record UserForRegistrationDto
 {
-    [Required(ErrorMessage = "Username is required")]
-    public string? UserName { get; init; }
-
-    [Required(ErrorMessage = "Password is required")]
-    public string? Password { get; init; }
-
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress]
-    public string? Email { get; init; }
-    [Required(ErrorMessage = "Role is required")]
-    public string? Role { get; init; }
-
+    [Required] public string? FirstName { get; set; }
+    [Required] public string? LastName { get; set; }
+    public string? UserName { get; set; }      // optional, server-generated
+    public string? Password { get; set; }      // optional, server-generated
+    [Required, EmailAddress] public string? Email { get; init; }
+    [Required] public string? Role { get; init; }
     public List<string>? CourseIDs { get; set; } = new();
 }
+

@@ -410,6 +410,75 @@
         }
       }
     },
+    "/api/authentication/upload-users": {
+      "post": {
+        "tags": [
+          "Autentication"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ContentType": {
+                    "type": "string"
+                  },
+                  "ContentDisposition": {
+                    "type": "string"
+                  },
+                  "Headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Length": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "Name": {
+                    "type": "string"
+                  },
+                  "FileName": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "ContentType": {
+                  "style": "form"
+                },
+                "ContentDisposition": {
+                  "style": "form"
+                },
+                "Headers": {
+                  "style": "form"
+                },
+                "Length": {
+                  "style": "form"
+                },
+                "Name": {
+                  "style": "form"
+                },
+                "FileName": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": true
+      }
+    },
     "/api/courses": {
       "get": {
         "tags": [
@@ -1907,19 +1976,27 @@
       "UserForRegistrationDto": {
         "required": [
           "email",
-          "password",
-          "role",
-          "userName"
+          "firstName",
+          "lastName",
+          "role"
         ],
         "type": "object",
         "properties": {
-          "userName": {
+          "firstName": {
             "minLength": 1,
             "type": "string"
           },
-          "password": {
+          "lastName": {
             "minLength": 1,
             "type": "string"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
           },
           "email": {
             "minLength": 1,

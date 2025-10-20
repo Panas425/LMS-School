@@ -14,6 +14,7 @@ import {
   IVideo,
   IDocument,
   ISubmission,
+  IRegisterUser,
 } from "../utils";
 import { useAuthContext } from "../hooks";
 import { jwtDecode } from "jwt-decode";
@@ -66,12 +67,12 @@ interface IApiData {
   fetchUsersByCourseId: (courseId: string[]) => Promise<void>;
   fetchUsers: () => Promise<IUser[]>;
   createUser: (userDetails: {
-    UserName: string;
-    Password: string;
+    FirstName: string;
+    LastName: string;
     Email: string;
     Role: string;
     CourseIDs: string[];
-  }) => Promise<IUser>;
+  }) => Promise<IRegisterUser>;
   createModule: (moduleDetails: {
     name: string;
     description: string;
@@ -94,6 +95,7 @@ interface IApiData {
   fetchSubmissionsByActivity: (activityId: string) => Promise<any[]>
   fetchMySubmissionForActivity: (userId: string) => Promise<ISubmission[]>
   fetchActivities: (moduleId: string) => Promise<IActivity[]>;
+  uploadUsersExcel: (file: File) => Promise<{ message: string; users: any[] }>;
 
   handleDeleteUser: (userId: string) => Promise<void>;
   deleteCourse: (courseId: string) => Promise<void>;
@@ -260,13 +262,43 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
+const uploadUsersExcel = async (file: File): Promise<{ message: string; users: any[] }> => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(`${BASE_URL}/authentication/upload-users`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokens?.accessToken}`, 
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Upload failed: ${errorText}`);
+    }
+
+    const data = await response.json();
+    return {
+      message: data.message || "Upload successful!",
+      users: data.users || []
+    };
+  } catch (error) {
+    console.error("Error uploading users Excel:", error);
+    throw error;
+  }
+};
+
+
   const createUser = async (userDetails: {
-    UserName: string;
-    Password: string;
+    FirstName: string;
+    LastName: string;
     Email: string;
     Role: string;
     CourseIDs?: string[];
-  }): Promise<IUser> => {
+  }): Promise<IRegisterUser> => {
     const url = `${BASE_URL}/authentication`;
     try {
       const newUser = await fetchWithToken(url, "POST", userDetails);
@@ -544,7 +576,7 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
 
   const fetchMySubmissionForActivity = async (userId: string): Promise<ISubmission[]> => {
     if (!userId) return [];
-    
+
     try {
       const data: ISubmission[] = await fetchWithToken(
         `${BASE_URL}/submissions/student/${userId}`
@@ -742,6 +774,7 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
         setmyCourse,
         fetchModuleVideos,
         deleteActivity,
+        uploadUsersExcel,
         setUserList,
         uploadSubmission,
         handleDeleteUser,
