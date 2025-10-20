@@ -30,6 +30,7 @@ namespace LMS.API.Data
             );
 
 
+
             modelBuilder.Entity<Module>().HasData(
                 new Module { Id = Guid.NewGuid(), Name = "Functions", Description = "Intro to Functions", Start = DateTime.UtcNow, End = DateTime.UtcNow.AddMonths(1), CourseId = course1Id},
                 new Module { Id = Guid.NewGuid(), Name = "Polynomials", Description = "Intro to Polynomials", Start = DateTime.UtcNow.AddMonths(1), End = DateTime.UtcNow.AddMonths(2), CourseId = course1Id },
@@ -38,7 +39,7 @@ namespace LMS.API.Data
 
              );
 
-
+            // CourseUser composite key
             modelBuilder.Entity<CourseUser>()
                 .HasKey(cu => new { cu.UserId, cu.CourseId });
 
@@ -52,11 +53,44 @@ namespace LMS.API.Data
                 .WithMany(c => c.CourseUsers)
                 .HasForeignKey(cu => cu.CourseId);
 
+            // Explicit table names to avoid pluralization issues
+            modelBuilder.Entity<Document>().ToTable("Document");
+            modelBuilder.Entity<ActivityType>().ToTable("ActivityType");
+
+            // Relations for Document
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.Course)
+                .WithMany(c => c.Documents)
+                .HasForeignKey(d => d.CourseId);
+
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.Module)
+                .WithMany(m => m.Documents)
+                .HasForeignKey(d => d.ModuleId);
+
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.Activity)
+                .WithMany(a => a.Documents)
+                .HasForeignKey(d => d.ActivityId);
+
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.UploadedBy)
+                .WithMany()
+                .HasForeignKey(d => d.UploadedById)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
 
         }
 
         public DbSet<CourseUser> CourseUsers { get; set; }
 
         public DbSet<ActivityType> ActivityType { get; set; }
+
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<Submission> Submissions { get; set; }
+
+
+
     }
 }

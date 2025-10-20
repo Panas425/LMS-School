@@ -22,6 +22,52 @@ namespace LMS.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Document", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UploadedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.HasIndex("UploadedById");
+
+                    b.ToTable("Document", (string)null);
+                });
+
             modelBuilder.Entity("LMS.API.Models.Entities.Activity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -178,14 +224,14 @@ namespace LMS.API.Migrations
                             Id = new Guid("6f01e571-41f0-4789-8059-422ae07d736e"),
                             Description = "Intro to Math",
                             Name = "Mathematics 101",
-                            Start = new DateTime(2025, 10, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3589)
+                            Start = new DateTime(2025, 10, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(2990)
                         },
                         new
                         {
                             Id = new Guid("a767cdee-e833-427a-9349-3ee71cca8a39"),
                             Description = "Intro to Physics",
                             Name = "Physics 101",
-                            Start = new DateTime(2025, 10, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3596)
+                            Start = new DateTime(2025, 10, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(2997)
                         });
                 });
 
@@ -238,40 +284,76 @@ namespace LMS.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("65f4170b-b3ba-4a07-8533-571c7b80bb74"),
+                            Id = new Guid("6fcea26b-5c04-4d90-a59f-4523537d334c"),
                             CourseId = new Guid("6f01e571-41f0-4789-8059-422ae07d736e"),
                             Description = "Intro to Functions",
-                            End = new DateTime(2025, 11, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3897),
+                            End = new DateTime(2025, 11, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3271),
                             Name = "Functions",
-                            Start = new DateTime(2025, 10, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3894)
+                            Start = new DateTime(2025, 10, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3267)
                         },
                         new
                         {
-                            Id = new Guid("36e4632a-6660-4664-9c83-b1d388f88d30"),
+                            Id = new Guid("3ea0411f-833f-4c5a-adc7-eb88fa4d49b9"),
                             CourseId = new Guid("6f01e571-41f0-4789-8059-422ae07d736e"),
                             Description = "Intro to Polynomials",
-                            End = new DateTime(2025, 12, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3908),
+                            End = new DateTime(2025, 12, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3281),
                             Name = "Polynomials",
-                            Start = new DateTime(2025, 11, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3907)
+                            Start = new DateTime(2025, 11, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3280)
                         },
                         new
                         {
-                            Id = new Guid("239ae192-0c55-4b47-9872-19f20014591b"),
+                            Id = new Guid("761e44de-560f-4516-91cc-357f2aa53071"),
                             CourseId = new Guid("a767cdee-e833-427a-9349-3ee71cca8a39"),
                             Description = "Intro to Vektors",
-                            End = new DateTime(2025, 11, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3910),
+                            End = new DateTime(2025, 11, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3285),
                             Name = "Vektors",
-                            Start = new DateTime(2025, 10, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3910)
+                            Start = new DateTime(2025, 10, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3285)
                         },
                         new
                         {
-                            Id = new Guid("1fed9cea-6a0f-4680-813f-cf3d6020cc73"),
+                            Id = new Guid("7af4f433-3505-4150-8471-0e21e62b53b1"),
                             CourseId = new Guid("a767cdee-e833-427a-9349-3ee71cca8a39"),
                             Description = "Intro to Kinematics",
-                            End = new DateTime(2025, 12, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3913),
+                            End = new DateTime(2025, 12, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3292),
                             Name = "Kimenatics",
-                            Start = new DateTime(2025, 11, 1, 20, 31, 35, 804, DateTimeKind.Utc).AddTicks(3913)
+                            Start = new DateTime(2025, 11, 18, 20, 2, 0, 616, DateTimeKind.Utc).AddTicks(3291)
                         });
+                });
+
+            modelBuilder.Entity("LMS.API.Models.Entities.Submission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Submissions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -407,6 +489,35 @@ namespace LMS.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Document", b =>
+                {
+                    b.HasOne("LMS.API.Models.Entities.Activity", "Activity")
+                        .WithMany("Documents")
+                        .HasForeignKey("ActivityId");
+
+                    b.HasOne("LMS.API.Models.Entities.Course", "Course")
+                        .WithMany("Documents")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("LMS.API.Models.Entities.Module", "Module")
+                        .WithMany("Documents")
+                        .HasForeignKey("ModuleId");
+
+                    b.HasOne("LMS.API.Models.Entities.ApplicationUser", "UploadedBy")
+                        .WithMany()
+                        .HasForeignKey("UploadedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Module");
+
+                    b.Navigation("UploadedBy");
+                });
+
             modelBuilder.Entity("LMS.API.Models.Entities.Activity", b =>
                 {
                     b.HasOne("LMS.API.Models.Entities.ActivityType", "ActivityType")
@@ -461,6 +572,25 @@ namespace LMS.API.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("LMS.API.Models.Entities.Submission", b =>
+                {
+                    b.HasOne("LMS.API.Models.Entities.Activity", "Activity")
+                        .WithMany("Submissions")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS.API.Models.Entities.ApplicationUser", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -512,6 +642,13 @@ namespace LMS.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LMS.API.Models.Entities.Activity", b =>
+                {
+                    b.Navigation("Documents");
+
+                    b.Navigation("Submissions");
+                });
+
             modelBuilder.Entity("LMS.API.Models.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("CourseUsers");
@@ -521,6 +658,8 @@ namespace LMS.API.Migrations
                 {
                     b.Navigation("CourseUsers");
 
+                    b.Navigation("Documents");
+
                     b.Navigation("Modules");
 
                     b.Navigation("Users");
@@ -529,6 +668,8 @@ namespace LMS.API.Migrations
             modelBuilder.Entity("LMS.API.Models.Entities.Module", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("Documents");
                 });
 #pragma warning restore 612, 618
         }

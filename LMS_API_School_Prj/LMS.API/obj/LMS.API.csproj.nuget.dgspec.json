@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\anasa\\Desktop\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj": {}
+    "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\anasa\\Desktop\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj": {
+    "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\anasa\\Desktop\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj",
+        "projectUniqueName": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj",
         "projectName": "LMS.API",
-        "projectPath": "C:\\Users\\anasa\\Desktop\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj",
+        "projectPath": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj",
         "packagesPath": "C:\\Users\\anasa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\anasa\\Desktop\\LMS_API_School_Prj\\LMS.API\\obj\\",
+        "outputPath": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

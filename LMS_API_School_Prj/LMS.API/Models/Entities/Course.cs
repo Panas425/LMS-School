@@ -31,6 +31,9 @@ namespace LMS.API.Models.Entities
 
         // Many-to-many join table
         public ICollection<CourseUser> CourseUsers { get; set; } = new List<CourseUser>();
+
+        public ICollection<Document> Documents { get; set; } = new List<Document>();
+
     }
 }
 

@@ -10,5 +10,8 @@
         public Guid CourseId { get; set; }
         public Course? Course { get; set; }
         public IEnumerable<Activity>? Activities { get; set; }
+
+        public ICollection<Document> Documents { get; set; } = new List<Document>();
+
     }
 }

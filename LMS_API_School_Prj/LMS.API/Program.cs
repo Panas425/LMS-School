@@ -8,6 +8,7 @@ using LMS.API.Services; // Make sure to include this namespace
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -80,6 +81,53 @@ public class Program
         .AddDefaultTokenProviders();
 
         var app = builder.Build();
+
+        var submissionsPath = Path.Combine(app.Environment.ContentRootPath, "UploadedSubmissions");
+        if (!Directory.Exists(submissionsPath))
+        {
+            Directory.CreateDirectory(submissionsPath);
+        }
+
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(submissionsPath),
+            RequestPath = "/UploadedSubmissions"
+        });
+
+
+
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseCors("AllowAll");
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            try
+            {
+                var authService = services.GetRequiredService<IAuthService>();
+                await authService.SeedUsersAsync();
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred seeding the DB.");
+            }
+        }
+
+        await app.RunAsync();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

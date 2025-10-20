@@ -5,6 +5,7 @@ namespace LMS.API.Models.Dtos
 {
     public record ActivityDto
     {
+        public Guid Id { get; set; }
         [Required] public string? Name { get; init; }
         [Required] public string? Description { get; init; }
         [Required] public Guid TypeId { get; init; }

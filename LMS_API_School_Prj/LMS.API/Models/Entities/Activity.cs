@@ -12,5 +12,8 @@
         public ActivityType? ActivityType { get; set; }
         public Guid ModuleId { get; set; }
         public Module? Module { get; set; }
+
+        public ICollection<Document> Documents { get; set; } = new List<Document>();
+        public ICollection<Submission> Submissions { get; set; } = new List<Submission>();
     }
 }
