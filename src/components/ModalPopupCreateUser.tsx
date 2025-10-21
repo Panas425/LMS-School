@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { AddUserForm } from "../pages/render/RenderAddUserForm.tsx";
 
 interface ModalPopupProps {
