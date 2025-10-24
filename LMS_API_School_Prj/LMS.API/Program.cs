@@ -42,6 +42,8 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.ConfigureJwt(builder.Configuration);
 
+        builder.Services.AddScoped<IEmailService, EmailService>();
+
         builder.Services.AddSwaggerGen(c =>
         {
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

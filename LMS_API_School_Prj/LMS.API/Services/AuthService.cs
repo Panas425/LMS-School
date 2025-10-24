@@ -205,6 +205,8 @@ public class AuthService : IAuthService
     },
     new UserForRegistrationDto
     {
+        FirstName= "Student2",
+        LastName= "Student2",
         UserName = "Student",
         Password = "Password123!",
         Email = "student1@example.com",
@@ -213,6 +215,8 @@ public class AuthService : IAuthService
     },
     new UserForRegistrationDto
     {
+        FirstName= "Student2",
+        LastName= "Student2",
         UserName = "Student2",
         Password = "Password123!",
         Email = "student2@example.com",

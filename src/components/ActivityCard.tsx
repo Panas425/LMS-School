@@ -62,11 +62,11 @@ export function ActivityCard({ activity }: IActivityCardProps) {
     setSubmissions,
   ]);
 
-  const handleUpload = async (userId: string) => {
+  const handleUpload = async (userId: string, studentName: string) => {
     if (!file) return alert("Select a file first");
     setUploading(true);
     try {
-      await uploadSubmission({ file, activityId: activity.id });
+      await uploadSubmission({ file, studentName, activityId: activity.id });
       alert("Upload successful!");
       const updated = await fetchMySubmissionForActivity(userId);
       const filtered = updated.filter(
@@ -154,7 +154,7 @@ export function ActivityCard({ activity }: IActivityCardProps) {
                 />
               </Form.Group>
               <Button
-                onClick={() => handleUpload(user!.id)}
+                onClick={() => handleUpload(user!.id, user.name)}
                 disabled={uploading || !file}
                 className="mt-2"
               >

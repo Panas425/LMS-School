@@ -4,6 +4,7 @@ using LMS.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.API.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251024053752_AddCourseUsersRelation4")]
+    partial class AddCourseUsersRelation4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,14 +260,14 @@ namespace LMS.API.Migrations
                             Id = new Guid("6f01e571-41f0-4789-8059-422ae07d736e"),
                             Description = "Intro to Math",
                             Name = "Mathematics 101",
-                            Start = new DateTime(2025, 10, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6107)
+                            Start = new DateTime(2025, 10, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2645)
                         },
                         new
                         {
                             Id = new Guid("a767cdee-e833-427a-9349-3ee71cca8a39"),
                             Description = "Intro to Physics",
                             Name = "Physics 101",
-                            Start = new DateTime(2025, 10, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6111)
+                            Start = new DateTime(2025, 10, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2653)
                         });
                 });
 
@@ -320,39 +323,39 @@ namespace LMS.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b3b4601a-58e4-4305-b193-8b41b3bec3b1"),
+                            Id = new Guid("f018fc20-eec1-4c89-aa21-bc7b6736bf0f"),
                             CourseId = new Guid("6f01e571-41f0-4789-8059-422ae07d736e"),
                             Description = "Intro to Functions",
-                            End = new DateTime(2025, 11, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6270),
+                            End = new DateTime(2025, 11, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2890),
                             Name = "Functions",
-                            Start = new DateTime(2025, 10, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6267)
+                            Start = new DateTime(2025, 10, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2887)
                         },
                         new
                         {
-                            Id = new Guid("a985120e-7be7-4312-a1f4-f2a918af7085"),
+                            Id = new Guid("934509ed-0b94-43d7-8c06-5f26ec1ef74a"),
                             CourseId = new Guid("6f01e571-41f0-4789-8059-422ae07d736e"),
                             Description = "Intro to Polynomials",
-                            End = new DateTime(2025, 12, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6279),
+                            End = new DateTime(2025, 12, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2898),
                             Name = "Polynomials",
-                            Start = new DateTime(2025, 11, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6278)
+                            Start = new DateTime(2025, 11, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2897)
                         },
                         new
                         {
-                            Id = new Guid("c8f98b35-4b77-4662-bee4-21eaa78e572f"),
+                            Id = new Guid("c1cfc06d-6c94-4ed7-8dc2-d621cdbd131a"),
                             CourseId = new Guid("a767cdee-e833-427a-9349-3ee71cca8a39"),
                             Description = "Intro to Vektors",
-                            End = new DateTime(2025, 11, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6287),
+                            End = new DateTime(2025, 11, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2901),
                             Name = "Vektors",
-                            Start = new DateTime(2025, 10, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6287)
+                            Start = new DateTime(2025, 10, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2901)
                         },
                         new
                         {
-                            Id = new Guid("c10260aa-b01a-4c7c-90e5-4543e60d9995"),
+                            Id = new Guid("2b89a9ed-462d-452f-b592-f368267ac385"),
                             CourseId = new Guid("a767cdee-e833-427a-9349-3ee71cca8a39"),
                             Description = "Intro to Kinematics",
-                            End = new DateTime(2025, 12, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6290),
+                            End = new DateTime(2025, 12, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2904),
                             Name = "Kimenatics",
-                            Start = new DateTime(2025, 11, 24, 16, 49, 34, 740, DateTimeKind.Utc).AddTicks(6289)
+                            Start = new DateTime(2025, 11, 24, 5, 37, 52, 179, DateTimeKind.Utc).AddTicks(2903)
                         });
                 });
 
@@ -379,9 +382,6 @@ namespace LMS.API.Migrations
                     b.Property<string>("StudentId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("StudentName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("SubmittedAt")
                         .HasColumnType("datetime2");

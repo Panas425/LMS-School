@@ -27,38 +27,13 @@ namespace LMS.API.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/submissions/activity/{activityId}
+        // GET submissions by activity
         [HttpGet("activity/{activityId}")]
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> GetSubmissionsByActivity(Guid activityId)
         {
             var submissions = await _context.Submissions
                 .Where(s => s.ActivityId == activityId)
-                .Include(s => s.Student)
-                .Select(s => new SubmissionDto
-                {
-                    Id = s.Id.ToString(),
-                    FileName = s.FileName,
-                    FileUrl = s.FileUrl,
-                    Student = new StudentDto
-                    {
-                        Id = s.Student.Id,
-                        UserName = s.Student.UserName
-                    }
-                })
-                .ToListAsync();
-
-            return Ok(submissions);
-        }
-
-        [HttpGet("student/{studentId}")]
-        [Authorize(Roles = "Student,Teacher")]
-        public async Task<IActionResult> GetSubmissionsByStudent(string studentId)
-        {
-            var submissions = await _context.Submissions
-                .Where(s => s.StudentId == studentId)
-                .Include(s => s.Activity)
-                .Include(s => s.Student)
                 .Select(s => new SubmissionDto
                 {
                     Id = s.Id.ToString(),
@@ -69,19 +44,47 @@ namespace LMS.API.Controllers
                         Id = s.Activity.Id,
                         Name = s.Activity.Name
                     },
-                    StudentId = s.Student.Id,
-                    StudentName = $"{s.Student.FirstName} {s.Student.LastName}".Trim()
+                    StudentId = s.StudentId,
+                    StudentName = _context.Users
+                        .Where(u => u.Id == s.StudentId)
+                        .Select(u => u.FirstName + " " + u.LastName)
+                        .FirstOrDefault()
                 })
                 .ToListAsync();
 
             return Ok(submissions);
         }
 
+        // GET submissions by student
+        [HttpGet("student/{studentId}")]
+        [Authorize(Roles = "Student,Teacher")]
+        public async Task<IActionResult> GetSubmissionsByStudent(string studentId)
+        {
+            var student = await _userManager.FindByIdAsync(studentId);
+            if (student == null)
+                return NotFound("Student not found.");
 
+            var submissions = await _context.Submissions
+                .Where(s => s.StudentId == studentId)
+                .Select(s => new SubmissionDto
+                {
+                    Id = s.Id.ToString(),
+                    FileName = s.FileName,
+                    FileUrl = s.FileUrl,
+                    Activity = s.Activity == null ? null : new ActivityDto
+                    {
+                        Id = s.Activity.Id,
+                        Name = s.Activity.Name
+                    },
+                    StudentId = student.Id,
+                    StudentName = student.FullName
+                })
+                .ToListAsync();
 
+            return Ok(submissions);
+        }
 
-
-        // POST: api/submissions/upload
+        // POST upload submission
         [HttpPost("upload")]
         [Authorize(Roles = "Student")]
         public async Task<IActionResult> UploadSubmission(
@@ -97,32 +100,25 @@ namespace LMS.API.Controllers
                 Directory.CreateDirectory(submissionsPath);
 
             var filePath = Path.Combine(submissionsPath, file.FileName);
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream);
 
-            // Save the file locally
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // ✅ Get the current user ID from JWT
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized("User ID not found in token.");
 
-            // ✅ Retrieve the student (ApplicationUser) from DB
             var student = await _userManager.FindByIdAsync(userId);
             if (student == null)
                 return NotFound("Student not found.");
 
-            // ✅ Create the submission with linked student
             var submission = new Submission
             {
                 Id = Guid.NewGuid(),
                 FileName = file.FileName,
                 FileUrl = $"/UploadedSubmissions/{file.FileName}",
                 ActivityId = activityId,
-                StudentId = student.Id,   // FK
-                Student = student,        // Navigation property
+                StudentId = student.Id,
+                StudentName = student.FullName,
                 SubmittedAt = DateTime.UtcNow,
                 Deadline = deadline
             };
@@ -130,7 +126,11 @@ namespace LMS.API.Controllers
             _context.Submissions.Add(submission);
             await _context.SaveChangesAsync();
 
-            // ✅ Return a clean DTO with student info
+            var activityName = await _context.Activities
+                .Where(a => a.Id == activityId)
+                .Select(a => a.Name)
+                .FirstOrDefaultAsync() ?? "Unknown";
+
             var submissionDto = new SubmissionDto
             {
                 Id = submission.Id.ToString(),
@@ -138,21 +138,17 @@ namespace LMS.API.Controllers
                 FileUrl = submission.FileUrl,
                 Activity = new ActivityDto
                 {
-                    Id = submission.ActivityId,
-                    Name = (await _context.Activities
-                        .Where(a => a.Id == activityId)
-                        .Select(a => a.Name)
-                        .FirstOrDefaultAsync()) ?? "Unknown"
+                    Id = activityId,
+                    Name = activityName
                 },
                 StudentId = student.Id,
-                StudentName = $"{student.FirstName} {student.LastName}".Trim()
+                StudentName = student.FullName
             };
 
             return Ok(submissionDto);
         }
 
-
-        // DELETE: api/submissions/{id}
+        // DELETE submission
         [HttpDelete("{id}")]
         [Authorize(Roles = "Student,Teacher")]
         public async Task<IActionResult> DeleteSubmission(Guid id)
@@ -160,14 +156,9 @@ namespace LMS.API.Controllers
             var submission = await _context.Submissions.FindAsync(id);
             if (submission == null) return NotFound();
 
-
             _context.Submissions.Remove(submission);
             await _context.SaveChangesAsync();
             return NoContent();
         }
-
-
-
-
     }
 }

@@ -43,6 +43,7 @@ interface IApiData {
   uploadSubmission: (submissionDetails: {
     file: File;
     activityId: string;
+    studentName: string;
     deadline?: Date | null;
   }) => Promise<any>;
 
@@ -218,12 +219,14 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
   const uploadSubmission = async (submissionDetails: {
     file: File;
     activityId: string;
+    studentName: string;
     deadline?: Date | null;
   }): Promise<any> => {
     try {
       const formData = new FormData();
       formData.append("file", submissionDetails.file);
       formData.append("activityId", submissionDetails.activityId);
+      formData.append("name", submissionDetails.studentName);
       if (submissionDetails.deadline) {
         // Format deadline to ISO string expected by backend
         formData.append("deadline", submissionDetails.deadline.toISOString());

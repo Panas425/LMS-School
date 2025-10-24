@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMS.API.Models.Entities
 {
@@ -27,5 +28,7 @@ namespace LMS.API.Models.Entities
         // Status
         public DateTime? Deadline { get; set; }
         public bool IsLate => Deadline.HasValue && SubmittedAt > Deadline.Value;
+
+        public string? StudentName { get; set; }
     }
 }

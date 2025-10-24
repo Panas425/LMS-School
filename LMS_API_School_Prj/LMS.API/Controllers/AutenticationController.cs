@@ -2,6 +2,7 @@
 using LMS.API.Models.Dtos;
 using LMS.API.Models.Entities;
 using LMS.API.Service.Contracts;
+using LMS.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,15 @@ public class AutenticationController : ControllerBase
     private readonly IServiceManager _serviceManager;
     private readonly DatabaseContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IEmailService _emailService;
 
 
-    public AutenticationController(IServiceManager serviceManager, DatabaseContext context, UserManager<ApplicationUser> userManager)
+    public AutenticationController(IServiceManager serviceManager, DatabaseContext context, UserManager<ApplicationUser> userManager, IEmailService emailService)
     {
         _serviceManager = serviceManager;
         _context = context;
         _userManager = userManager;
+        _emailService = emailService;
     }
 
     [HttpPost]
@@ -170,7 +173,6 @@ public class AutenticationController : ControllerBase
         }
 
         var createdUsers = new List<UserForRegistrationDto>();
-
         foreach (var userDto in usersToRegister)
         {
             var result = await _serviceManager.AuthService.RegisterUserAsync(userDto);
@@ -192,6 +194,11 @@ public class AutenticationController : ControllerBase
                         }
                     }
                 }
+
+                // Send email with credentials
+                var emailBody = $"Hello {userDto.FirstName},<br><br>Your account has been created.<br>Username: {userDto.UserName}<br>Password: {userDto.Password}<br><br>Please change your password after logging in.";
+                await _emailService.SendEmailAsync(userDto.Email, "Your Account Credentials", emailBody);
+
                 createdUsers.Add(userDto);
             }
         }
