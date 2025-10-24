@@ -2,14 +2,24 @@ import { useState, useEffect, useContext } from "react";
 import { ApiDataContext } from "../context/ApiDataProvider";
 import { Button, Form, ListGroup, Spinner } from "react-bootstrap";
 import { IActivity, ISubmission } from "../utils";
+import { useActivityStore } from "../stores/useActivityStore";
 
 interface IActivityCardProps {
   activity: IActivity;
 }
 
 export function ActivityCard({ activity }: IActivityCardProps) {
-  const { uploadSubmission, fetchSubmissionsByActivity, user, deleteSubmission, fetchMySubmissionForActivity } = useContext(ApiDataContext);
-  const [submissions, setSubmissions] = useState<ISubmission[]>([]);
+  const {
+    uploadSubmission,
+    fetchSubmissionsByActivity,
+    user,
+    deleteSubmission,
+    fetchMySubmissionForActivity,
+  } = useContext(ApiDataContext);
+
+  const submissions = useActivityStore((state) => state.submissions);
+  const setSubmissions = useActivityStore((state) => state.setSubmissions);
+
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -22,20 +32,35 @@ export function ActivityCard({ activity }: IActivityCardProps) {
     if (!activity?.id || !user?.id) return;
 
     setLoading(true);
-    if (isTeacher) {
-      fetchSubmissionsByActivity(activity.id)
-        .then((data) => setSubmissions(data))
-        .finally(() => setLoading(false));
-    } else if (isStudent) {
-      fetchMySubmissionForActivity(user.id)
-        .then((data) => {
-          // Filter by current activity if backend does not filter
-          const filtered = data.filter(sub => sub.activity?.id === activity.id);
+    const loadSubmissions = async () => {
+      try {
+        if (isTeacher) {
+          const data = await fetchSubmissionsByActivity(activity.id);
+          setSubmissions(data);
+        } else if (isStudent) {
+          const data = await fetchMySubmissionForActivity(user.id);
+          const filtered = data.filter(
+            (sub) => sub.activity?.id === activity.id
+          );
           setSubmissions(filtered);
-        })
-        .finally(() => setLoading(false));
-    }
-  }, [activity?.id, user?.id, isTeacher, isStudent, fetchSubmissionsByActivity, fetchMySubmissionForActivity]);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSubmissions();
+  }, [
+    activity?.id,
+    user?.id,
+    isTeacher,
+    isStudent,
+    fetchSubmissionsByActivity,
+    fetchMySubmissionForActivity,
+    setSubmissions,
+  ]);
 
   const handleUpload = async (userId: string) => {
     if (!file) return alert("Select a file first");
@@ -44,8 +69,11 @@ export function ActivityCard({ activity }: IActivityCardProps) {
       await uploadSubmission({ file, activityId: activity.id });
       alert("Upload successful!");
       const updated = await fetchMySubmissionForActivity(userId);
-      const filtered = updated.filter(sub => sub.activity?.id === activity.id);
+      const filtered = updated.filter(
+        (sub) => sub.activity?.id === activity.id
+      );
       setSubmissions(filtered);
+      setFile(null);
     } catch (err) {
       console.error(err);
       alert("Upload failed");
@@ -63,7 +91,9 @@ export function ActivityCard({ activity }: IActivityCardProps) {
         setSubmissions(data);
       } else if (isStudent && user?.id) {
         const updated = await fetchMySubmissionForActivity(user.id);
-        const filtered = updated.filter(sub => sub.activity?.id === activity.id);
+        const filtered = updated.filter(
+          (sub) => sub.activity?.id === activity.id
+        );
         setSubmissions(filtered);
       }
     } catch (err) {
@@ -72,14 +102,17 @@ export function ActivityCard({ activity }: IActivityCardProps) {
     }
   };
 
-  const studentSubmission = submissions[0] || null; // Assumes one submission per student per activity
+  // For student: pick first submission for this activity (one submission per student)
+  const studentSubmission: ISubmission | null = isStudent
+    ? submissions[0] || null
+    : null;
 
   return (
     <div>
       <h5>{activity.name}</h5>
       <p>{activity.description}</p>
 
-      {/* Teacher view: show submissions */}
+      {/* Teacher view */}
       {isTeacher && (
         <div>
           <h6>Submissions</h6>
@@ -91,9 +124,9 @@ export function ActivityCard({ activity }: IActivityCardProps) {
             <ListGroup>
               {submissions.map((sub) => (
                 <ListGroup.Item key={sub.id}>
-                  {sub.student?.userName} -{" "}
+                  {sub.studentName}{" "}
                   <a
-                    href={`http://localhost:5058/UploadedSubmissions/${sub.fileName}`}
+                    href={`http://localhost:5058${sub.fileUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -106,7 +139,7 @@ export function ActivityCard({ activity }: IActivityCardProps) {
         </div>
       )}
 
-      {/* Student view: upload submission */}
+      {/* Student view */}
       {isStudent && (
         <div>
           {!studentSubmission ? (
@@ -123,6 +156,7 @@ export function ActivityCard({ activity }: IActivityCardProps) {
               <Button
                 onClick={() => handleUpload(user!.id)}
                 disabled={uploading || !file}
+                className="mt-2"
               >
                 {uploading ? "Uploading..." : "Upload"}
               </Button>
@@ -132,7 +166,7 @@ export function ActivityCard({ activity }: IActivityCardProps) {
               <p>
                 You have already submitted:{" "}
                 <a
-                  href={`http://localhost:5058/UploadedSubmissions/${studentSubmission.fileName}`}
+                  href={`http://localhost:5058${studentSubmission.fileName}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

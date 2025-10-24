@@ -62,6 +62,8 @@ export interface IModules {
 export interface IUser {
   id: string;
   userName: string;
+  firstName: string;
+  lastName: string;
   role: string;
   email: string;
   courseID: string[];
@@ -85,8 +87,11 @@ export interface ICourseIds {
 }
 
 export interface IUserCourse {
-  userName: string;
-  courseName: string;
+  studentId: string;
+  firstName: string;
+  lastName: string;
+  isPresent: false;
+  courseID: string;
 }
 
 export interface IUserLoggedIn {
@@ -106,10 +111,14 @@ export interface IActivity {
 }
 
 export interface ISubmission {
-    id: string;
-    fileName: string;
-    fileUrl: string;
-    student?: { userName: string };
-    activity?: { id: string };
+  id: string;
+  studentName: string;
+  fileName: string;
+  fileUrl: string;
+  activity: IActivity;
+  feedback?: {
+    grade: number | null;
+    feedbackText: string | null;
+  };
 }
 

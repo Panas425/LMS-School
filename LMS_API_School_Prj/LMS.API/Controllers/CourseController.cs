@@ -177,6 +177,92 @@ namespace LMS.API.Controllers
             }
         }
 
+        [HttpGet("{courseId}/students")]
+        public async Task<ActionResult<List<AttendanceDto>>> GetStudentsByCourse(Guid courseId)
+        {
+            var students = await _context.CourseUsers
+                .Where(cu => cu.CourseId == courseId && cu.RoleInCourse == "Student")
+                .Include(cu => cu.User)
+                .Select(cu => new AttendanceDto
+                {
+                    StudentId = cu.UserId, // ändrat här
+                    CourseId = cu.CourseId,
+                    FirstName = cu.User.FirstName,
+                    LastName = cu.User.LastName,
+                    Date = DateTime.UtcNow
+                }).ToListAsync();
+
+            return Ok(students);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpGet("{courseId}/attendance")]
+        public async Task<ActionResult<IEnumerable<AttendanceDto>>> GetAttendanceRecords(Guid courseId)
+        {
+            // Hämta attendance inklusive studenten (ApplicationUser) för att få namn
+            var attendanceRecords = await _context.Attendances
+                .Where(a => a.CourseId == courseId)
+                .Include(a => a.Student)  // Navigeringsproperty till ApplicationUser, t.ex. "Student"
+                .ToListAsync();
+
+            // Mappa till DTO inkluderande namn
+            var attendanceDtos = attendanceRecords.Select(a => new AttendanceDto
+            {
+                CourseId = a.CourseId,
+                StudentId = a.StudentId,
+                FirstName = a.Student?.FirstName,
+                LastName = a.Student?.LastName,
+                Date = a.Date,
+                IsPresent = a.IsPresent
+            }).ToList();
+
+            return Ok(attendanceDtos);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost("{courseId}/attendance")]
+        public async Task<ActionResult> SaveAttendance(Guid courseId, [FromBody] List<AttendanceDto> attendanceList)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var date = attendanceList.FirstOrDefault()?.Date.Date ?? DateTime.Today;
+
+            foreach (var dto in attendanceList)
+            {
+                var existing = await _context.Attendances
+                    .FirstOrDefaultAsync(a => a.CourseId == courseId
+                                           && a.StudentId == dto.StudentId
+                                           && a.Date.Date == dto.Date.Date);
+
+                if (existing != null)
+                {
+                    existing.IsPresent = dto.IsPresent;
+                }
+                else
+                {
+                    _context.Attendances.Add(new Attendance
+                    {
+                        CourseId = courseId,
+                        StudentId = dto.StudentId,
+                        Date = dto.Date,
+                        IsPresent = dto.IsPresent
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+
+
+
+
+
+
+
 
 
     }

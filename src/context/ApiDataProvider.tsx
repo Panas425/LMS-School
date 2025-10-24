@@ -33,7 +33,6 @@ interface IApiData {
   courseIds: ICourseIds[] | null;
   myCourses: ICourses[];
 
-
   uploadModuleVideo: (videoDetails: {
     moduleId: string;
     title: string;
@@ -46,8 +45,6 @@ interface IApiData {
     activityId: string;
     deadline?: Date | null;
   }) => Promise<any>;
-
-
 
   getCourseByIdFromRouter: (courseId: string[]) => Promise<void>;
   activities: IActivity[] | null;
@@ -62,9 +59,9 @@ interface IApiData {
     description: string;
     startDate: string;
   }) => Promise<void>;
-  fetchUsersByCourse: () => Promise<void>;
+  fetchUsersByCourse: (courseId: string) => Promise<IUserCourse[]>;
   fetchUsersMyCourse: (id: string) => Promise<void>;
-  fetchUsersByCourseId: (courseId: string[]) => Promise<void>;
+  fetchUsersByCourseId: (courseId: string) => Promise<void>;
   fetchUsers: () => Promise<IUser[]>;
   createUser: (userDetails: {
     FirstName: string;
@@ -78,7 +75,7 @@ interface IApiData {
     description: string;
     start: string;
     end: string;
-    courseID: string[];
+    courseID: string;
   }) => Promise<IModules>;
   createActivity: (activityDetails: {
     name: string;
@@ -88,20 +85,24 @@ interface IApiData {
     end: string;
     moduleID: string;
   }) => Promise<IActivity>;
-  fetchAllCourses: () => Promise<ICourses[]>
+  fetchAllCourses: () => Promise<ICourses[]>;
   fetchCourse: (id: string) => Promise<void>;
   fetchUsersWithCourses: () => Promise<IUserCourse[]>;
-  deleteSubmission: (submissionId: string) => Promise<void>
-  fetchSubmissionsByActivity: (activityId: string) => Promise<any[]>
-  fetchMySubmissionForActivity: (userId: string) => Promise<ISubmission[]>
+  deleteSubmission: (submissionId: string) => Promise<void>;
+  fetchSubmissionsByActivity: (activityId: string) => Promise<any[]>;
+
+  fetchMySubmissionForActivity: (userId: string) => Promise<ISubmission[]>;
   fetchActivities: (moduleId: string) => Promise<IActivity[]>;
   uploadUsersExcel: (file: File) => Promise<{ message: string; users: any[] }>;
-
   handleDeleteUser: (userId: string) => Promise<void>;
   deleteCourse: (courseId: string) => Promise<void>;
   deleteModule: (moduleId: string) => Promise<void>;
   deleteActivity: (actId: string) => Promise<void>;
-
+  fetchAttendanceByCourse: (courseId: string) => Promise<IUserCourse[]>;
+  saveAttendance: (
+    courseId: string,
+    attendanceList: { studentId: string; isPresent: boolean; date: string }[]
+  ) => Promise<void>;
 }
 
 interface JwtPayload {
@@ -122,7 +123,9 @@ export const ApiDataContext = createContext<IApiData>({} as IApiData);
 export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
   const [users, setUsers] = useState<IUser[] | null>(null);
   const [userList, setUserList] = useState<IUser[] | null>(null);
-  const [myCourseuserList, myCoursesetUserList] = useState<IUser[] | null>(null);
+  const [myCourseuserList, myCoursesetUserList] = useState<IUser[] | null>(
+    null
+  );
   const [course, setCourse] = useState<ICourses | null>(null);
   const [myCourse, setmyCourse] = useState<ICourses | null>(null);
   const [courses, setCourses] = useState<ICourses[] | null>(null);
@@ -136,9 +139,6 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
   const [isModuleAdded, setIsModuleAdded] = useState(false);
 
   const [myCourses, setMyCourses] = useState<ICourses[]>([]);
-
-
-
 
   const fetchWithToken = async (
     url: string,
@@ -208,6 +208,13 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
+  const fetchAttendanceByCourse = async (courseId: string) => {
+    const data = await fetchWithToken(
+      `${BASE_URL}/courses/${courseId}/attendance`
+    );
+    return data; // returnerar [{ studentId, isPresent, date }]
+  };
+
   const uploadSubmission = async (submissionDetails: {
     file: File;
     activityId: string;
@@ -262,35 +269,58 @@ export const ApiDataProvider = ({ children }: ApiDataProviderProps) => {
     }
   };
 
-const uploadUsersExcel = async (file: File): Promise<{ message: string; users: any[] }> => {
-  try {
-    const formData = new FormData();
-    formData.append("file", file);
+  const uploadUsersExcel = async (
+    file: File
+  ): Promise<{ message: string; users: any[] }> => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const response = await fetch(`${BASE_URL}/authentication/upload-users`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${tokens?.accessToken}`, 
-      },
-      body: formData,
-    });
+      const response = await fetch(`${BASE_URL}/authentication/upload-users`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokens?.accessToken}`,
+        },
+        body: formData,
+      });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Upload failed: ${errorText}`);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Upload failed: ${errorText}`);
+      }
+
+      const data = await response.json();
+      return {
+        message: data.message || "Upload successful!",
+        users: data.users || [],
+      };
+    } catch (error) {
+      console.error("Error uploading users Excel:", error);
+      throw error;
     }
+  };
 
-    const data = await response.json();
-    return {
-      message: data.message || "Upload successful!",
-      users: data.users || []
-    };
-  } catch (error) {
-    console.error("Error uploading users Excel:", error);
-    throw error;
-  }
-};
-
+  const saveAttendance = async (
+    courseId: string,
+    attendanceList: { studentId: string; isPresent: boolean; date: string }[]
+  ): Promise<void> => {
+    try {
+      await fetchWithToken(
+        `${BASE_URL}/courses/${courseId}/attendance`,
+        "POST",
+        attendanceList
+      );
+      alert("Attendance saved successfully!");
+    } catch (err) {
+      if (err instanceof CustomError) {
+        console.error("Error saving attendance:", err.message);
+        alert(err.message);
+      } else {
+        console.error("Unexpected error:", err);
+        alert("An unexpected error occurred while saving attendance.");
+      }
+    }
+  };
 
   const createUser = async (userDetails: {
     FirstName: string;
@@ -302,7 +332,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     const url = `${BASE_URL}/authentication`;
     try {
       const newUser = await fetchWithToken(url, "POST", userDetails);
-      alert("User added")
+      alert("User added");
       return newUser;
     } catch (error) {
       console.error("Error creating user:", error);
@@ -315,7 +345,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     description: string;
     start: string;
     end: string;
-    courseID: string[];
+    courseID: string;
   }): Promise<IModules> => {
     const url = `${BASE_URL}/modules`;
     try {
@@ -327,23 +357,27 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-  const createActivity = async (
-    activityDetails: {
-      name: string;
-      description: string;
-      activityType: string;
-      start: string;
-      end: string;
-      moduleID: string;
-    }
-  ): Promise<IActivity> => {
+  const createActivity = async (activityDetails: {
+    name: string;
+    description: string;
+    activityType: string;
+    start: string;
+    end: string;
+    moduleID: string;
+  }): Promise<IActivity> => {
     const url = `${BASE_URL}/activities`;
 
     try {
-      const newActivity: IActivity = await fetchWithToken(url, "POST", activityDetails);
+      const newActivity: IActivity = await fetchWithToken(
+        url,
+        "POST",
+        activityDetails
+      );
 
       setActivities((prevActivity) =>
-        Array.isArray(prevActivity) ? [...prevActivity, newActivity] : [newActivity]
+        Array.isArray(prevActivity)
+          ? [...prevActivity, newActivity]
+          : [newActivity]
       );
 
       alert("Activity added");
@@ -400,7 +434,9 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
 
   const fetchActivities = async (moduleId: string): Promise<IActivity[]> => {
     try {
-      const activities = await fetchWithToken(`${BASE_URL}/activities/moduleid/${moduleId}`);
+      const activities = await fetchWithToken(
+        `${BASE_URL}/activities/moduleid/${moduleId}`
+      );
       setActivities(activities); // still update the context state
       return activities; // <-- return them so the type matches
     } catch (err) {
@@ -410,11 +446,12 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-
   const fetchCoursesForUser = async (userId: string) => {
     try {
-      const data: IUserCourses = await fetchWithToken(`${BASE_URL}/courses/${userId}/courses`);
-      setMyCourses(data.courses);  // store all courses
+      const data: IUserCourses = await fetchWithToken(
+        `${BASE_URL}/courses/${userId}/courses`
+      );
+      setMyCourses(data.courses); // store all courses
     } catch (err) {
       console.error("Error fetching courses:", err);
     }
@@ -435,28 +472,32 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-
-  const fetchUsersByCourse = async () => {
+  const fetchUsersByCourse = async (
+    courseId: string
+  ): Promise<IUserCourse[]> => {
+    if (!courseId) {
+      return [];
+    }
     try {
-      const usersData = await fetchWithToken(
-        `${BASE_URL}/users/courses/${course?.id}`
+      const response = await fetchWithToken(
+        `${BASE_URL}/courses/${courseId}/students/`
       );
-
-      setUserList(usersData);
-      localStorage.setItem("userList", JSON.stringify(usersData));
-    } catch (err) {
-      if (err instanceof CustomError) {
-        setError(err.message);
+      // Validera och returnera data
+      if (Array.isArray(response)) {
+        return response;
       } else {
-        setError("An unexpected error occurred while fetching users.");
+        return [];
       }
+    } catch (error) {
+      // Hantera fel
+      return [];
     }
   };
-
-
   const fetchUsersMyCourse = async (user_id: string) => {
     try {
-      const usersData: IUser[] = await fetchWithToken(`${BASE_URL}/users/courses/${user_id}`);
+      const usersData: IUser[] = await fetchWithToken(
+        `${BASE_URL}/users/courses/${user_id}`
+      );
       setUserList(usersData);
       localStorage.setItem("userList", JSON.stringify(usersData));
     } catch (err) {
@@ -465,14 +506,13 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-
-  const fetchUsersByCourseId = async (courseId: string[]) => {
+  const fetchUsersByCourseId = async (courseId: string) => {
     try {
       const usersData = await fetchWithToken(
         `${BASE_URL}/users/courses/${courseId}`
       );
       //setUserList(usersData);
-      setmyCourse(usersData)
+      setmyCourse(usersData);
     } catch (err) {
       if (err instanceof CustomError) {
         setError(err.message);
@@ -498,14 +538,11 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-
-
-
-
   const fetchCourse = async (userId: string) => {
-
     try {
-      const data = await fetchWithToken(`${BASE_URL}/courses/${userId}/courses`);
+      const data = await fetchWithToken(
+        `${BASE_URL}/courses/${userId}/courses`
+      );
       setmyCourse(data || null);
     } catch (err) {
       if (err instanceof CustomError) setError(err.message);
@@ -523,7 +560,8 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
       const formData = new FormData();
       formData.append("ModuleId", videoDetails.moduleId);
       formData.append("Title", videoDetails.title);
-      if (videoDetails.description) formData.append("Description", videoDetails.description);
+      if (videoDetails.description)
+        formData.append("Description", videoDetails.description);
       formData.append("File", videoDetails.file);
 
       const response = await fetch(`${BASE_URL}/Documents/upload-video`, {
@@ -553,13 +591,18 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-  const fetchSubmissionsByActivity = async (activityId: string): Promise<any[]> => {
+  const fetchSubmissionsByActivity = async (
+    activityId: string
+  ): Promise<any[]> => {
     try {
-      const response = await fetch(`${BASE_URL}/submissions/activity/${activityId}`, {
-        headers: {
-          Authorization: `Bearer ${tokens?.accessToken}`,
-        },
-      });
+      const response = await fetch(
+        `${BASE_URL}/submissions/activity/${activityId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokens?.accessToken}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -567,6 +610,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
       }
 
       const data = await response.json();
+      console.log(data);
       return data; // Array of submissions
     } catch (err) {
       console.error("Error fetching submissions:", err);
@@ -574,24 +618,22 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-  const fetchMySubmissionForActivity = async (userId: string): Promise<ISubmission[]> => {
+  const fetchMySubmissionForActivity = async (
+    userId: string
+  ): Promise<ISubmission[]> => {
     if (!userId) return [];
 
     try {
       const data: ISubmission[] = await fetchWithToken(
         `${BASE_URL}/submissions/student/${userId}`
       );
-      console.log(data)
+      console.log(data);
       return data;
     } catch (err) {
       console.error("Error fetching submissions:", err);
       return [];
     }
   };
-
-
-
-
 
   const handleDeleteUser = async (userId: string) => {
     try {
@@ -622,7 +664,6 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
     }
   };
 
-
   const deleteCourse = async (courseId: string) => {
     try {
       // Corrected API URL to point to the user endpoint
@@ -632,7 +673,9 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
       await fetchWithToken(url, "DELETE");
 
       // Remove the user from the list on success
-      const updatedCourses = courses?.filter((course) => course.id !== courseId);
+      const updatedCourses = courses?.filter(
+        (course) => course.id !== courseId
+      );
 
       setCourses(updatedCourses!);
     } catch (error) {
@@ -646,8 +689,10 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
       const url = `${BASE_URL}/modules/${moduleId}`;
       await fetchWithToken(url, "DELETE");
 
-      const updatedCourses = courses?.map(course => {
-        const filteredModules = course.modules.filter(module => module.id !== moduleId);
+      const updatedCourses = courses?.map((course) => {
+        const filteredModules = course.modules.filter(
+          (module) => module.id !== moduleId
+        );
         return { ...course, modules: filteredModules };
       });
 
@@ -663,44 +708,45 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
       await fetchWithToken(url, "DELETE");
 
       // Update the state to remove the deleted activity
-      const updatedCourses = courses?.map(course => {
+      const updatedCourses = courses?.map((course) => {
         // Update the modules in each course
-        const updatedModules = course.modules.map(module => {
+        const updatedModules = course.modules.map((module) => {
           // Filter out the activity with the given actId
-          const filteredActivities = module.activities.filter(activity => activity.id !== actId);
+          const filteredActivities = module.activities.filter(
+            (activity) => activity.id !== actId
+          );
 
           return {
             ...module,
-            activities: filteredActivities // Update the activities in the module
+            activities: filteredActivities, // Update the activities in the module
           };
         });
 
         return {
           ...course,
-          modules: updatedModules // Update the modules in the course
+          modules: updatedModules, // Update the modules in the course
         };
       });
 
       setCourses(updatedCourses!); // Update the state with the new courses
 
       // If activities are also being managed in a separate state, update it here
-      setActivities(prevActivities =>
-        prevActivities?.filter(activity => activity.id !== actId) || null
+      setActivities(
+        (prevActivities) =>
+          prevActivities?.filter((activity) => activity.id !== actId) || null
       );
-
     } catch (error) {
       console.error("Error deleting activity:", error);
       // Handle error, show a message to the user if necessary
     }
   };
 
-
   useEffect(() => {
     if (tokens) {
       const decode = jwtDecode<JwtPayload>(tokens.accessToken);
       const id =
         decode[
-        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
         ]!;
       const name =
         decode[
@@ -710,7 +756,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
         decode[
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ]!.toLowerCase();
-      console.log(role)
+      console.log(role);
       setUser({ id, name, role });
     }
   }, [tokens]);
@@ -720,8 +766,6 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
       console.log("User:", user); // Log user after it has been updated
     }
   }, [user]);
-
-
 
   useEffect(() => {
     const storedCourse = localStorage.getItem("course");
@@ -773,6 +817,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
         createUser,
         setmyCourse,
         fetchModuleVideos,
+        fetchAttendanceByCourse,
         deleteActivity,
         uploadUsersExcel,
         setUserList,
@@ -785,6 +830,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
         fetchUsersMyCourse,
         fetchActivities,
         createActivity,
+        saveAttendance,
         deleteModule,
         getCourseById,
         fetchUsersWithCourses,
@@ -797,7 +843,7 @@ const uploadUsersExcel = async (file: File): Promise<{ message: string; users: a
         deleteSubmission,
         fetchUsersByCourseId,
         getCourseByIdFromRouter,
-        deleteCourse
+        deleteCourse,
       }}
     >
       {children}

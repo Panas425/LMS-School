@@ -4,6 +4,7 @@ using LMS.API.Models.Dtos.Mapper;
 using LMS.API.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,10 +19,12 @@ namespace LMS.API.Controllers
     public class SubmissionsController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SubmissionsController(DatabaseContext context)
+        public SubmissionsController(DatabaseContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/submissions/activity/{activityId}
@@ -48,7 +51,6 @@ namespace LMS.API.Controllers
             return Ok(submissions);
         }
 
-        // GET: api/submissions/student/{studentId}
         [HttpGet("student/{studentId}")]
         [Authorize(Roles = "Student,Teacher")]
         public async Task<IActionResult> GetSubmissionsByStudent(string studentId)
@@ -56,16 +58,19 @@ namespace LMS.API.Controllers
             var submissions = await _context.Submissions
                 .Where(s => s.StudentId == studentId)
                 .Include(s => s.Activity)
+                .Include(s => s.Student)
                 .Select(s => new SubmissionDto
                 {
                     Id = s.Id.ToString(),
                     FileName = s.FileName,
-                    FileUrl = $"/UploadedSubmissions/{s.FileName}",
+                    FileUrl = s.FileUrl,
                     Activity = new ActivityDto
                     {
                         Id = s.Activity.Id,
                         Name = s.Activity.Name
-                    }
+                    },
+                    StudentId = s.Student.Id,
+                    StudentName = $"{s.Student.FirstName} {s.Student.LastName}".Trim()
                 })
                 .ToListAsync();
 
@@ -74,10 +79,15 @@ namespace LMS.API.Controllers
 
 
 
+
+
         // POST: api/submissions/upload
         [HttpPost("upload")]
         [Authorize(Roles = "Student")]
-        public async Task<IActionResult> UploadSubmission([FromForm] IFormFile file, [FromForm] Guid activityId, [FromForm] DateTime? deadline)
+        public async Task<IActionResult> UploadSubmission(
+            [FromForm] IFormFile file,
+            [FromForm] Guid activityId,
+            [FromForm] DateTime? deadline)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
@@ -94,17 +104,25 @@ namespace LMS.API.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            // Get the actual user ID from JWT to avoid FK conflict
-            var userId = User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value
-                         ?? throw new Exception("User ID not found");
+            // ✅ Get the current user ID from JWT
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User ID not found in token.");
 
+            // ✅ Retrieve the student (ApplicationUser) from DB
+            var student = await _userManager.FindByIdAsync(userId);
+            if (student == null)
+                return NotFound("Student not found.");
+
+            // ✅ Create the submission with linked student
             var submission = new Submission
             {
                 Id = Guid.NewGuid(),
                 FileName = file.FileName,
-                FileUrl = $"/UploadedSubmissions/{file.FileName}", // Web-accessible URL
+                FileUrl = $"/UploadedSubmissions/{file.FileName}",
                 ActivityId = activityId,
-                StudentId = userId,
+                StudentId = student.Id,   // FK
+                Student = student,        // Navigation property
                 SubmittedAt = DateTime.UtcNow,
                 Deadline = deadline
             };
@@ -112,8 +130,27 @@ namespace LMS.API.Controllers
             _context.Submissions.Add(submission);
             await _context.SaveChangesAsync();
 
-            return Ok(submission);
+            // ✅ Return a clean DTO with student info
+            var submissionDto = new SubmissionDto
+            {
+                Id = submission.Id.ToString(),
+                FileName = submission.FileName,
+                FileUrl = submission.FileUrl,
+                Activity = new ActivityDto
+                {
+                    Id = submission.ActivityId,
+                    Name = (await _context.Activities
+                        .Where(a => a.Id == activityId)
+                        .Select(a => a.Name)
+                        .FirstOrDefaultAsync()) ?? "Unknown"
+                },
+                StudentId = student.Id,
+                StudentName = $"{student.FirstName} {student.LastName}".Trim()
+            };
+
+            return Ok(submissionDto);
         }
+
 
         // DELETE: api/submissions/{id}
         [HttpDelete("{id}")]

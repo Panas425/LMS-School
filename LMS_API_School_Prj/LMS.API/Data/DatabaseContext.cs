@@ -14,7 +14,15 @@ namespace LMS.API.Data
 
         public DbSet<Course> Courses { get; set; } = default!;
         public DbSet<Module> Modules { get; set; } = default!;
-        public DbSet<Activity> Activities { get; set; }
+        public DbSet<Activity> Activities { get; set; } = default!;
+        public DbSet<Attendance> Attendances { get; set; } = default!;
+
+        public DbSet<CourseUser> CourseUsers { get; set; } = default!;
+
+        public DbSet<ActivityType> ActivityTypes { get; set; } = default!;
+
+        public DbSet<Document> Documents { get; set; } = default!;
+        public DbSet<Submission> Submissions { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -81,16 +89,8 @@ namespace LMS.API.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
 
+
+
         }
-
-        public DbSet<CourseUser> CourseUsers { get; set; }
-
-        public DbSet<ActivityType> ActivityType { get; set; }
-
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Submission> Submissions { get; set; }
-
-
-
     }
 }

@@ -5,15 +5,14 @@ namespace LMS.API.Models.Dtos
 {
     public record UserForListDto 
     {
-        public Guid Id { get; set; }
-        [Required]
-        public string? UserName { get; init; }
-
-        [Required]
-        public string? Email { get; init; }
-
+        public string Id { get; set; }
+        public string? UserName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Email { get; set; }
         public string? Role { get; set; }
-        public string? CourseID { get; set; }
+
+        public List<Guid> CourseIDs { get; set; } = new List<Guid>();
 
     }
 }

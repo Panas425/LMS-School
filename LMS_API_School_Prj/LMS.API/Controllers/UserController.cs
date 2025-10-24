@@ -25,28 +25,28 @@ namespace LMS.API.Controllers
             _mapper = mapper;
             _context = context;
         }
-        [Authorize(Roles = "Teacher,Student")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserForListDto>>> GetUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users
+                .Include(u => u.CourseUsers)
+                .ToListAsync();
 
-            if (users.Count == 0)
-            {
+            if (!users.Any())
                 return NotFound("No users found.");
-            }
 
             var userDtos = new List<UserForListDto>();
-            foreach (var user in users) {
-                {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var userDto = _mapper.Map<UserForListDto>(user);
-                    userDto.Role = roles.FirstOrDefault(); // Assign the first role or null if none exists
-                    userDtos.Add(userDto);
-                }};
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var userDto = _mapper.Map<UserForListDto>(user);
+                userDto.Role = roles.FirstOrDefault();
+                userDtos.Add(userDto);
+            }
 
             return Ok(userDtos);
         }
+
 
         [Authorize(Roles = "Teacher")]
         [HttpGet("{id}")]
@@ -213,6 +213,9 @@ namespace LMS.API.Controllers
 
             return NoContent();
         }
+
+
+
 
 
 

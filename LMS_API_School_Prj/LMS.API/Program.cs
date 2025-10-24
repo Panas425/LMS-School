@@ -11,9 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using System.Text.Json.Serialization;
 using OfficeOpenXml;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LMS.API;
 
@@ -69,6 +70,12 @@ public class Program
             });
         });
 
+        builder.Services.AddControllers()
+        .AddJsonOptions(opts =>
+        {
+            opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        });
+
         builder.Services.AddIdentityCore<ApplicationUser>(opt =>
         {
             opt.Password.RequireDigit = false;
@@ -95,7 +102,17 @@ public class Program
             RequestPath = "/UploadedSubmissions"
         });
 
+        var videosPath = Path.Combine(app.Environment.ContentRootPath, "UploadedVideos");
+        if (!Directory.Exists(videosPath))
+        {
+            Directory.CreateDirectory(videosPath);
+        }
 
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(videosPath),
+            RequestPath = "/UploadedVideos"
+        });
 
 
         // Configure the HTTP request pipeline.

@@ -11,6 +11,6 @@ public record UserForRegistrationDto
     public string? Password { get; set; }      // optional, server-generated
     [Required, EmailAddress] public string? Email { get; init; }
     [Required] public string? Role { get; init; }
-    public List<string>? CourseIDs { get; set; } = new();
+    public List<string>? CourseIDs { get; set; }
 }
 

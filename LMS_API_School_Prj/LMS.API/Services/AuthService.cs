@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using LMS.API.Data;
 using LMS.API.Models.Dtos;
 using LMS.API.Models.Entities;
 using LMS.API.Service.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,15 +19,16 @@ public class AuthService : IAuthService
     private readonly IConfiguration configuration;
     private readonly RoleManager<IdentityRole> roleManager;
     private ApplicationUser? user;
+    private readonly DatabaseContext context;
     private readonly IMapper mapper;
 
-    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IMapper mapper)
+    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IMapper mapper, DatabaseContext context)
     {
         this.userManager = userManager;
         this.configuration = configuration;
         this.roleManager = roleManager;
         this.mapper = mapper;
-
+        this.context = context;
         SeedUsersAsync().GetAwaiter().GetResult();
     }
 
@@ -192,41 +195,68 @@ public class AuthService : IAuthService
         await SeedRoles(roleManager);
 
         var users = new List<UserForRegistrationDto>
-        {
-            new UserForRegistrationDto
-            {
-                UserName = "Teacher",
-                Password = "Password123!",
-                Email = "teacher@example.com",
-                Role = "Teacher"
-                
-            },
-            new UserForRegistrationDto
-            {
-                UserName = "Student",
-                Password = "Password123!",
-                Email = "student1@example.com",
-                Role = "Student",
-                CourseIDs = new List<string> { "a767cdee-e833-427a-9349-3ee71cca8a39" }
-            },
-            new UserForRegistrationDto
-            {
-                UserName = "Student2",
-                Password = "Password123!",
-                Email = "student2@example.com",
-                Role = "Student",
-                CourseIDs = new List<string> { "6f01e571-41f0-4789-8059-422ae07d736e" }
-            }
-        };
+{
+    new UserForRegistrationDto
+    {
+        UserName = "Teacher",
+        Password = "Password123!",
+        Email = "teacher@example.com",
+        Role = "Teacher"
+    },
+    new UserForRegistrationDto
+    {
+        UserName = "Student",
+        Password = "Password123!",
+        Email = "student1@example.com",
+        Role = "Student",
+        CourseIDs = new List<string> { "a767cdee-e833-427a-9349-3ee71cca8a39" }
+    },
+    new UserForRegistrationDto
+    {
+        UserName = "Student2",
+        Password = "Password123!",
+        Email = "student2@example.com",
+        Role = "Student",
+        CourseIDs = new List<string> { "6f01e571-41f0-4789-8059-422ae07d736e" }
+    }
+};
 
-        foreach (var userDto in users)
+        foreach (var dto in users)
         {
-            var result = await RegisterUserAsync(userDto);
-            if (!result.Succeeded)
+            var user = await userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
             {
-                Console.WriteLine($"Failed to create user {userDto.UserName}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                user = mapper.Map<ApplicationUser>(dto);
+                var result = await userManager.CreateAsync(user, dto.Password);
+                if (!result.Succeeded) continue;
+
+                await userManager.AddToRoleAsync(user, dto.Role!);
+            }
+
+            // Add CourseUser entries via the context
+            if (dto.CourseIDs != null)
+            {
+                foreach (var courseIdStr in dto.CourseIDs)
+                {
+                    if (Guid.TryParse(courseIdStr, out var courseId))
+                    {
+                        // Check if the mapping already exists
+                        bool exists = await context.CourseUsers.AnyAsync(cu => cu.UserId == user.Id && cu.CourseId == courseId);
+                        if (!exists)
+                        {
+                            context.CourseUsers.Add(new CourseUser
+                            {
+                                UserId = user.Id,
+                                CourseId = courseId
+                            });
+                        }
+                    }
+                }
             }
         }
+
+        // Save all changes at once
+        await context.SaveChangesAsync();
     }
 
     public static void ConfigureJwt(IServiceCollection services, IConfiguration configuration)

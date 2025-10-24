@@ -312,6 +312,79 @@
   },
   {
     "ContainingType": "LMS.API.Controllers.CourseController",
+    "Method": "GetAttendanceRecords",
+    "RelativePath": "api/courses/{courseId}/attendance",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[LMS.API.Models.Dtos.AttendanceDto, LMS.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "LMS.API.Controllers.CourseController",
+    "Method": "SaveAttendance",
+    "RelativePath": "api/courses/{courseId}/attendance",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "attendanceList",
+        "Type": "System.Collections.Generic.List\u00601[[LMS.API.Models.Dtos.AttendanceDto, LMS.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LMS.API.Controllers.CourseController",
+    "Method": "GetStudentsByCourse",
+    "RelativePath": "api/courses/{courseId}/students",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[LMS.API.Models.Dtos.AttendanceDto, LMS.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "LMS.API.Controllers.CourseController",
     "Method": "DeleteCourse",
     "RelativePath": "api/courses/{id}",
     "HttpMethod": "DELETE",

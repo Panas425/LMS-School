@@ -33,14 +33,15 @@ public class AutenticationController : ControllerBase
         if (string.IsNullOrWhiteSpace(userForRegistration.UserName))
         {
             // Generate username automatically: first 2 letters of first + last name + random number
-            var randomNumber = new Random().Next(100, 999);
-            userForRegistration.UserName = $"{userForRegistration.FirstName[..2]}{userForRegistration.LastName[..2]}{randomNumber}".ToLower();
+            var random = new Random();
+            var randomNumber = random.Next(100, 999);
+            userForRegistration.UserName = $"{userForRegistration.FirstName?.Substring(0, 2)}{userForRegistration.LastName?.Substring(0, 2)}{randomNumber}".ToLower();
 
             // Ensure unique username
             while (await _userManager.FindByNameAsync(userForRegistration.UserName) != null)
             {
-                randomNumber = new Random().Next(100, 999);
-                userForRegistration.UserName = $"{userForRegistration.FirstName[..2]}{userForRegistration.LastName[..2]}{randomNumber}".ToLower();
+                randomNumber = random.Next(100, 999);
+                userForRegistration.UserName = $"{userForRegistration.FirstName?.Substring(0, 2)}{userForRegistration.LastName?.Substring(0, 2)}{randomNumber}".ToLower();
             }
         }
 
@@ -57,21 +58,34 @@ public class AutenticationController : ControllerBase
             return BadRequest("At least one assigned course is required for students.");
         }
 
-        var result = await _serviceManager.AuthService.RegisterUserAsync(userForRegistration);
-        if (!result.Succeeded) return BadRequest(result.Errors);
+        var user = new ApplicationUser
+        {
+            UserName = userForRegistration.UserName,
+            Email = userForRegistration.Email,
+            FirstName = userForRegistration.FirstName,
+            LastName = userForRegistration.LastName
+        };
+
+        var createResult = await _userManager.CreateAsync(user, userForRegistration.Password);
+        if (!createResult.Succeeded) return BadRequest(createResult.Errors);
+
+        if (!string.IsNullOrEmpty(userForRegistration.Role))
+        {
+            await _userManager.AddToRoleAsync(user, userForRegistration.Role);
+        }
 
         // Assign courses if student
         if (userForRegistration.Role?.ToLower() == "student" && userForRegistration.CourseIDs != null)
         {
-            var user = await _userManager.FindByNameAsync(userForRegistration.UserName);
             foreach (var courseIdStr in userForRegistration.CourseIDs)
             {
                 if (Guid.TryParse(courseIdStr, out var courseId))
                 {
                     _context.CourseUsers.Add(new CourseUser
                     {
-                        UserId = user!.Id,
-                        CourseId = courseId
+                        UserId = user.Id,
+                        CourseId = courseId,
+                        RoleInCourse = "Student"
                     });
                 }
             }
@@ -84,6 +98,7 @@ public class AutenticationController : ControllerBase
             Password = userForRegistration.Password
         });
     }
+
 
 
 
@@ -121,8 +136,9 @@ public class AutenticationController : ControllerBase
                 {
                     var firstName = worksheet.Cells[row, 1].Text.Trim();
                     var lastName = worksheet.Cells[row, 2].Text.Trim();
-                    var course = worksheet.Cells[row, 3].Text.Trim();
-                    var role = worksheet.Cells[row, 4].Text.Trim();
+                    var email = worksheet.Cells[row, 3].Text.Trim();
+                    var course = worksheet.Cells[row, 4].Text.Trim();
+                    var role = worksheet.Cells[row, 5].Text.Trim();
 
                     if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
                         continue;
@@ -145,7 +161,7 @@ public class AutenticationController : ControllerBase
                         LastName = lastName,
                         UserName = username,
                         Password = password,
-                        Email = $"{firstName}.{lastName}@example.com".ToLower(),
+                        Email = email,
                         Role = role,
                         CourseIDs = string.IsNullOrEmpty(course) ? new List<string>() : new List<string> { course }
                     });

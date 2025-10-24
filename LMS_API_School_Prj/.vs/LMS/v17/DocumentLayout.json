@@ -3,6 +3,42 @@
   "WorkspaceRootPath": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\submissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\submissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\submissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\submissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\data\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\data\\databasecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\submission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\submission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\userforregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\userforregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,36 +47,56 @@
       "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\autenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\loginuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\loginuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\mapper\\mappermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\mapper\\mappermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\courseuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\courseuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\userforlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\userforlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\lms.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\lms.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\userforauthenticationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\userforauthenticationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\attendance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\attendance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\entities\\loginuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\entities\\loginuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\videouploaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\videouploaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\models\\dtos\\userforupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\models\\dtos\\userforupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|c:\\users\\anasa\\desktop\\lms_school_prj\\lms-school\\lms_api_school_prj\\lms.api\\controllers\\activitytypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43B16B72-581F-4F60-8B5F-26675EEE7C96}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\activitytypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,121 +106,208 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 19,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Program.cs",
               "RelativeDocumentMoniker": "LMS.API\\Program.cs",
               "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Program.cs",
               "RelativeToolTip": "LMS.API\\Program.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAABUAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAgwEcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-20T09:57:36.181Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\appsettings.json",
-              "RelativeDocumentMoniker": "LMS.API\\appsettings.json",
-              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\appsettings.json",
-              "RelativeToolTip": "LMS.API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-20T10:06:03.469Z"
+              "DocumentIndex": 12,
+              "Title": "CourseUser.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\CourseUser.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\CourseUser.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\CourseUser.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Entities\\CourseUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T09:37:44.701Z",
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AutenticationController.cs",
-              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\AutenticationController.cs",
-              "RelativeDocumentMoniker": "LMS.API\\Controllers\\AutenticationController.cs",
-              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\AutenticationController.cs",
-              "RelativeToolTip": "LMS.API\\Controllers\\AutenticationController.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAowFYAAAAAAAAAAAAAAA==",
+              "Title": "SubmissionDto.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\SubmissionDto.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\SubmissionDto.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\SubmissionDto.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Dtos\\SubmissionDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T09:43:56.287Z"
+              "WhenOpened": "2025-10-24T05:03:37.743Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TokenController.cs",
-              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\TokenController.cs",
-              "RelativeDocumentMoniker": "LMS.API\\Controllers\\TokenController.cs",
-              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\TokenController.cs",
-              "RelativeToolTip": "LMS.API\\Controllers\\TokenController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Services\\AuthService.cs",
+              "RelativeToolTip": "LMS.API\\Services\\AuthService.cs",
+              "ViewState": "AgIAAMgAAAAAAAAAAAAiwNgAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T09:43:10.428Z"
+              "WhenOpened": "2025-10-24T03:11:25.259Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T09:36:14.808Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "UserForRegistrationDto.cs",
               "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForRegistrationDto.cs",
               "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\UserForRegistrationDto.cs",
               "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForRegistrationDto.cs",
               "RelativeToolTip": "LMS.API\\Models\\Dtos\\UserForRegistrationDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-20T09:38:18.493Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CourseUser.cs",
-              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\CourseUser.cs",
-              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\CourseUser.cs",
-              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\CourseUser.cs",
-              "RelativeToolTip": "LMS.API\\Models\\Entities\\CourseUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T09:37:44.701Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "LoginUser.cs",
-              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\LoginUser.cs",
-              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\LoginUser.cs",
-              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\LoginUser.cs",
-              "RelativeToolTip": "LMS.API\\Models\\Entities\\LoginUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T09:37:18.004Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\ApplicationUser.cs",
               "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\ApplicationUser.cs",
               "RelativeToolTip": "LMS.API\\Models\\Entities\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T09:37:09.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Submission.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\Submission.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\Submission.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\Submission.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Entities\\Submission.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T22:33:39.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Module.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\Module.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\Module.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\Module.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Entities\\Module.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T09:37:09.018Z"
+              "WhenOpened": "2025-10-23T22:33:35.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SubmissionsController.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\SubmissionsController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\SubmissionsController.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\SubmissionsController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\SubmissionsController.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-24T01:15:33.525Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "LMS.API\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\UserController.cs",
-              "RelativeToolTip": "LMS.API\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAUwNgAAAAAAAAAAAAAAA==",
+              "Title": "DatabaseContext.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Data\\DatabaseContext.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Data\\DatabaseContext.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Data\\DatabaseContext.cs",
+              "RelativeToolTip": "LMS.API\\Data\\DatabaseContext.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAawBgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T09:36:14.808Z"
+              "WhenOpened": "2025-10-23T21:39:26.72Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
+              "Title": "TokenController.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\TokenController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\TokenController.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\TokenController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\TokenController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T09:43:10.428Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AutenticationController.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\AutenticationController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\AutenticationController.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\AutenticationController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\AutenticationController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAqwDwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T09:43:56.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MapperManager.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\Mapper\\MapperManager.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\Mapper\\MapperManager.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\Mapper\\MapperManager.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Dtos\\Mapper\\MapperManager.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAArwBcAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T22:54:31.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UserForListDto.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForListDto.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\UserForListDto.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForListDto.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Dtos\\UserForListDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T22:52:02.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "LMS.API.csproj",
               "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\LMS.API.csproj",
               "RelativeDocumentMoniker": "LMS.API\\LMS.API.csproj",
@@ -172,7 +315,112 @@
               "RelativeToolTip": "LMS.API\\LMS.API.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-20T09:35:34.78Z"
+              "WhenOpened": "2025-10-20T09:35:34.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserForAuthenticationDto.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForAuthenticationDto.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\UserForAuthenticationDto.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForAuthenticationDto.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Dtos\\UserForAuthenticationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-24T03:31:45.448Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\CourseController.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\CourseController.cs",
+              "ViewState": "AgIAAK8AAAAAAAAAAAAAwL8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T21:34:30.526Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\appsettings.json",
+              "RelativeDocumentMoniker": "LMS.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\appsettings.json",
+              "RelativeToolTip": "LMS.API\\appsettings.json",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAmwBUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-20T10:06:03.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Attendance.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\Attendance.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\Attendance.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\Attendance.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Entities\\Attendance.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T21:37:54.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "LoginUser.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\LoginUser.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Entities\\LoginUser.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Entities\\LoginUser.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Entities\\LoginUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T09:37:18.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "VideoUploadDto.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\VideoUploadDto.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\VideoUploadDto.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\VideoUploadDto.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Dtos\\VideoUploadDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T22:33:55.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "UserForUpdateDto.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForUpdateDto.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Models\\Dtos\\UserForUpdateDto.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Models\\Dtos\\UserForUpdateDto.cs",
+              "RelativeToolTip": "LMS.API\\Models\\Dtos\\UserForUpdateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T22:33:52.278Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ActivityTypesController.cs",
+              "DocumentMoniker": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\ActivityTypesController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\ActivityTypesController.cs",
+              "ToolTip": "C:\\Users\\anasa\\Desktop\\LMS_School_Prj\\LMS-School\\LMS_API_School_Prj\\LMS.API\\Controllers\\ActivityTypesController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\ActivityTypesController.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAmwHAAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-23T21:44:40.822Z",
+              "EditorCaption": ""
             }
           ]
         }

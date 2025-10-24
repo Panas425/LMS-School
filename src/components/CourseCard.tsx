@@ -1,44 +1,51 @@
-import { MouseEventHandler, ReactElement } from "react";
+import { ReactElement } from "react";
 import "../css/index.css";
 import { ICourses } from "../utils";
 
 interface ICourseProps {
   course: ICourses;
-  handleCourseDelete: (courseId: string) =>Promise<void>;
+  handleCourseDelete: (courseId: string) => Promise<void>;
 }
-export function CourseCard({ course,handleCourseDelete }: ICourseProps): ReactElement {
 
-  // TODO: update courseDTO to include Id so that we can use it to make getCourseById request
-  // for when we click on the course card.
-  // TODO: Make Teacher version of mycoursepage AKA course details page => render courses' modules and courses' students
-  // TODO:
-
+export function CourseCard({
+  course,
+  handleCourseDelete,
+}: ICourseProps): ReactElement {
   return (
-    <section className="course-card-src">
-      <h2 className="title-card">{course.name}</h2>
-      <h4 className="module-card">Module List</h4>
-      <section className="info-display">
-        <div className="course-modules">
-          {course && course.modules && course.modules.length > 0 ? (
-            course.modules.map((module) => (
-              <div className="desc col-md-3">
-                <p className="cat-lbl">{module.name}</p>
-              </div>
-            ))
+    <div className="card h-100 shadow-sm border-0 course-card hover-shadow">
+      <div className="card-body d-flex flex-column">
+        {/* Course title */}
+        <h5 className="card-title text-primary">{course.name}</h5>
+
+        {/* Modules */}
+        <h6 className="card-subtitle mb-2 text-muted">Modules</h6>
+        <div className="mb-3">
+          {course.modules && course.modules.length > 0 ? (
+            <ul className="list-group list-group-flush">
+              {course.modules.map((module) => (
+                <li key={module.id} className="list-group-item p-1">
+                  {module.name}
+                </li>
+              ))}
+            </ul>
           ) : (
-            <p>No modules available.</p>
+            <p className="text-muted small mb-0">No modules available.</p>
           )}
         </div>
-      </section>
-      <button
-            className="btn btn-danger btn-sm ms-2"
+
+        {/* Spacer to push button to bottom */}
+        <div className="mt-auto d-flex justify-content-end">
+          <button
+            className="btn btn-danger btn-sm"
             onClick={(e) => {
-              e.stopPropagation();
+              e.stopPropagation(); // prevent card click
               handleCourseDelete(course.id);
             }}
           >
             Delete
           </button>
-    </section>
+        </div>
+      </div>
+    </div>
   );
 }

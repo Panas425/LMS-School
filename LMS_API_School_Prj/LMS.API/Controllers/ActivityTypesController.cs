@@ -32,7 +32,7 @@ namespace LMS.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ActivityType>>> GetActivityType()
         {
-            return await _context.ActivityType.ToListAsync();
+            return await _context.ActivityTypes.ToListAsync();
         }
 
         // GET: api/ActivityTypes/5
@@ -86,7 +86,7 @@ namespace LMS.API.Controllers
         public async Task<ActionResult<ActivityType>> PostActivityType(ActivityTypeDto activityType)
         {
             var obj = _mapper.Map<ActivityType>(activityType);
-            _context.ActivityType.Add(obj);
+            _context.ActivityTypes.Add(obj);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetActivityType", new { id = obj.Id }, activityType);
@@ -96,13 +96,13 @@ namespace LMS.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivityType(Guid id)
         {
-            var activityType = await _context.ActivityType.FindAsync(id);
+            var activityType = await _context.ActivityTypes.FindAsync(id);
             if (activityType == null)
             {
                 return NotFound();
             }
 
-            _context.ActivityType.Remove(activityType);
+            _context.ActivityTypes.Remove(activityType);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -110,7 +110,7 @@ namespace LMS.API.Controllers
 
         private bool ActivityTypeExists(Guid id)
         {
-            return _context.ActivityType.Any(e => e.Id == id);
+            return _context.ActivityTypes.Any(e => e.Id == id);
         }
     }
 }

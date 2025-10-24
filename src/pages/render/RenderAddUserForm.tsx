@@ -30,6 +30,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     LastName: lastName,
     Email: email.toLowerCase(),
     Role: role,
+    
     CourseIDs: role.toLowerCase() === "student" ? selectedCourses : [],
   };
 
