@@ -40,8 +40,8 @@ Students can watch course videos, submit assignments, and follow their learning 
 
 ```
 LMS-School/
-├── client/ (or frontend folder)
-├── server/ (or backend folder)
+├── / (frontend folder)
+├── LMS_API_School_Prj/ (backend folder)
 ├── models/
 ├── routes/
 ├── controllers/
