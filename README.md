@@ -1,61 +1,106 @@
-📚 LMS-School
-📖 Beskrivning
+# LMS-School 📚
 
-LMS-School är ett Learning Management System där lärare och elever kan interagera i en digital skolmiljö.
-Lärarna kan skapa kurser, lägga till aktiviteter och inlämningar, samt hålla koll på närvaro.
-Elever kan se kursvideor, lämna in uppgifter och följa sin egen utveckling.
+## Overview
 
-Projektet är byggt med React för frontend och Node.js för backend, och körs lokalt.
+**LMS-School** is a Learning Management System where teachers and students can interact in a digital school environment.
 
-✨ Funktioner
-För lärare
+Teachers can create courses, assignments, and activities, manage attendance, and track student progress.  
+Students can watch course videos, submit assignments, and follow their learning development.
 
-🔐 Inloggning och registrering
+---
 
-📚 Skapa och hantera kurser
+## Features
 
-📝 Skapa inlämningar och aktiviteter
+### 👨‍🏫 For Teachers
+- Secure login and registration
+- 📚 Create and manage courses
+- 📝 Create assignments and activities
+- 📊 Track student attendance
+- 🚦 Update course status
 
-📊 Närvarolista för elever
+### 👨‍🎓 For Students
+- 🎥 Watch course videos
+- 📝 Submit assignments
+- 📊 View course progress and attendance
 
-🚦 Lägga till statusar i kurser
+---
 
-För elever
+## Tech Stack
 
-🎥 Se kursvideor
+| Layer    | Technology |
+|----------|------------|
+| Frontend | React |
+| Backend  | Node.js |
+| Database | MongoDB |
+| Package Manager | npm |
 
-📝 Lämna in uppgifter
+---
 
-📊 Se kursstatus och närvaro
+## Project Structure
 
-🛠️ Teknologier
+```
+LMS-School/
+├── client/ (or frontend folder)
+├── server/ (or backend folder)
+├── models/
+├── routes/
+├── controllers/
+├── package.json
+└── README.md
+```
 
-Frontend: React
+---
 
-Backend: Node.js
+## Getting Started
 
-Databas: MongoDB
+### Prerequisites
+- Node.js
+- npm
 
-Övrigt: npm
+---
 
-🚀 Installation och körning
+### Installation
 
-Klona projektet:
-
+```bash
+# Clone the repository
 git clone https://github.com/Panas425/LMS-School.git
 
-Gå till projektmappen:
-
+# Move into the project directory
 cd LMS-School
 
-Installera dependencies:
-
+# Install dependencies
 npm install
+```
 
-Starta backend och frontend:
+---
 
+### Running the Project
+
+```bash
 npm start
+```
 
-Öppna webbläsaren på:
+The application will run on:
 
+```
 http://localhost:3000
+```
+
+---
+
+## Future Improvements
+- Add role-based authentication (teacher/student)
+- Improve UI/UX design
+- Deploy project to cloud (Vercel/Render/Heroku)
+- Add real-time notifications
+- Improve database structure and validation
+
+---
+
+## Repository
+GitHub: https://github.com/Panas425/LMS-School
+
+---
+
+## License
+This project is currently private/personal unless specified otherwise.
